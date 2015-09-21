@@ -1,7 +1,6 @@
 ![Logo 1][1]
 
 [![Build Status](https://api.travis-ci.org/We-Mobile/Amazing-MVP.svg?branch=master)](https://travis-ci.org/ppamorim/Amazing-MVP)
-[![Android Arsenal](https://img.shields.io/badge/Android%20Arsenal-Dragger-brightgreen.svg?style=flat)](https://android-arsenal.com/details/1/1673)
 
 How to use
 ----------
