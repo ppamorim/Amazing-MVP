@@ -13,17 +13,22 @@
 * See the License for the specific language governing permissions and
 * limitations under the License.
 */
-package com.amazingMvp.domain.interactors;
+package com.amazingmvprules.domain.executor;
 
-import android.os.Parcelable;
-import com.amazingMvp.domain.model.Genre;
+import android.os.Handler;
+import android.os.Looper;
+import javax.inject.Inject;
 
-public interface GetGenreDetails {
-  void execute(Callback callback);
-  void setParcelable(Parcelable parcelable);
-  interface Callback {
-    void onGenreLoaded(final Genre genre);
-    void onGenresEmpty();
+public class MainThreadImpl implements MainThread {
+
+  private Handler handler;
+
+  @Inject MainThreadImpl() {
+    this.handler = new Handler(Looper.getMainLooper());
   }
-}
 
+  public void post(Runnable runnable) {
+    handler.post(runnable);
+  }
+
+}

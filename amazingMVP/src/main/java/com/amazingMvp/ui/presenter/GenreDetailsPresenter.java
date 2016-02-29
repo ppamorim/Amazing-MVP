@@ -16,7 +16,7 @@
 package com.amazingMvp.ui.presenter;
 
 import android.os.Parcelable;
-import com.amazingMvp.domain.model.Genre;
+import com.amazingmvprules.domain.model.Genre;
 
 public interface GenreDetailsPresenter extends Presenter {
 

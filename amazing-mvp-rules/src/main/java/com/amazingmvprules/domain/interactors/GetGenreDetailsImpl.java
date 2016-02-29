@@ -13,13 +13,13 @@
 * See the License for the specific language governing permissions and
 * limitations under the License.
 */
-package com.amazingMvp.domain.interactors;
+package com.amazingmvprules.domain.interactors;
 
 import android.os.Parcelable;
-import com.amazingMvp.domain.model.Genre;
-import com.amazingMvp.executor.Interactor;
-import com.amazingMvp.executor.InteractorExecutor;
-import com.amazingMvp.executor.MainThread;
+import com.amazingmvprules.domain.executor.Interactor;
+import com.amazingmvprules.domain.executor.InteractorExecutor;
+import com.amazingmvprules.domain.executor.MainThread;
+import com.amazingmvprules.domain.model.Genre;
 import javax.inject.Inject;
 import org.parceler.Parcels;
 

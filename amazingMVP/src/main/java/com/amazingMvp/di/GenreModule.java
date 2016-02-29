@@ -16,10 +16,10 @@
 package com.amazingMvp.di;
 
 import com.amazingMvp.di.scopes.ActivityScope;
-import com.amazingMvp.domain.interactors.GetGenres;
-import com.amazingMvp.domain.interactors.GetGenresImpl;
 import com.amazingMvp.ui.presenter.GenrePresenter;
 import com.amazingMvp.ui.presenter.GenrePresenterImpl;
+import com.amazingmvprules.domain.interactors.GetGenres;
+import com.amazingmvprules.domain.interactors.GetGenresImpl;
 import dagger.Module;
 import dagger.Provides;
 

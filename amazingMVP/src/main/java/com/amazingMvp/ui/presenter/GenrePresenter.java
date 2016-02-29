@@ -16,7 +16,7 @@
 package com.amazingMvp.ui.presenter;
 
 import android.content.res.Resources;
-import com.amazingMvp.domain.model.Genre;
+import com.amazingmvprules.domain.model.Genre;
 import java.util.Collection;
 
 public interface GenrePresenter extends Presenter {

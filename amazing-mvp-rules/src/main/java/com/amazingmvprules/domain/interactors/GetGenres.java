@@ -13,16 +13,16 @@
 * See the License for the specific language governing permissions and
 * limitations under the License.
 */
-package com.amazingMvp.di.components;
+package com.amazingmvprules.domain.interactors;
 
-import android.app.Activity;
-import com.amazingMvp.di.ActivityModule;
-import com.amazingMvp.di.scopes.ActivityScope;
-import com.amazingMvp.navigation.GenreNavigator;
-import dagger.Component;
+import com.amazingmvprules.domain.model.Genre;
+import java.util.Collection;
 
-@ActivityScope @Component(dependencies = ApplicationComponent.class, modules = ActivityModule.class)
-public interface AbstractActivityComponent {
-  Activity activityContext();
-  GenreNavigator genreNavigator();
+public interface GetGenres {
+  void execute(Callback callback);
+  interface Callback {
+    void onGenresLoaded(final Collection<Genre> genres);
+    void onGenresEmpty();
+    void onErrorLoad();
+  }
 }

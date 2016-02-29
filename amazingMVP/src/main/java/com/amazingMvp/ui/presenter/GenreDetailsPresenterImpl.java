@@ -16,8 +16,8 @@
 package com.amazingMvp.ui.presenter;
 
 import android.os.Parcelable;
-import com.amazingMvp.domain.interactors.GetGenreDetails;
-import com.amazingMvp.domain.model.Genre;
+import com.amazingmvprules.domain.interactors.GetGenreDetails;
+import com.amazingmvprules.domain.model.Genre;
 import javax.inject.Inject;
 
 public class GenreDetailsPresenterImpl implements GenreDetailsPresenter {

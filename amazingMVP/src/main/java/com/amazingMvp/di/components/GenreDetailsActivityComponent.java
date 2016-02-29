@@ -18,14 +18,14 @@ package com.amazingMvp.di.components;
 import com.amazingMvp.di.ActivityModule;
 import com.amazingMvp.di.GenreDetailsModule;
 import com.amazingMvp.di.scopes.ActivityScope;
-import com.amazingMvp.domain.interactors.GetGenreDetails;
 import com.amazingMvp.ui.activity.SubGenreActivity;
 import com.amazingMvp.ui.presenter.GenreDetailsPresenter;
+import com.amazingmvprules.domain.interactors.GetGenreDetails;
 import dagger.Component;
 
 @ActivityScope @Component(dependencies = ApplicationComponent.class,
     modules = { ActivityModule.class, GenreDetailsModule.class })
-public interface GenreDetailsActivityComponent extends AbstractActivityComponent {
+public interface GenreDetailsActivityComponent {
   void inject(SubGenreActivity subGenreActivity);
   GenreDetailsPresenter getGenreDetailsPresenter();
   GetGenreDetails getGenreDetails();

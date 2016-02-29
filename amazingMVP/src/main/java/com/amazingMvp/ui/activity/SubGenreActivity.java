@@ -23,9 +23,10 @@ import com.amazingMvp.R;
 import com.amazingMvp.di.ActivityModule;
 import com.amazingMvp.di.components.DaggerGenreDetailsActivityComponent;
 import com.amazingMvp.di.components.GenreDetailsActivityComponent;
-import com.amazingMvp.domain.model.Genre;
 import com.amazingMvp.ui.presenter.GenreDetailsPresenter;
+import com.amazingMvp.util.Tags;
 import com.amazingMvp.util.ViewUtil;
+import com.amazingmvprules.domain.model.Genre;
 import com.facebook.drawee.view.SimpleDraweeView;
 import javax.inject.Inject;
 
@@ -46,7 +47,7 @@ public class SubGenreActivity extends AbstractActivity implements GenreDetailsPr
   @Override protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     genreDetailsActivityComponent().inject(this);
-    genreDetailsPresenter.setParcelable(getIntent().getParcelableExtra(Genre.TAG));
+    genreDetailsPresenter.setParcelable(getIntent().getParcelableExtra(Tags.GENRE));
     genreDetailsPresenter.setView(this);
     genreDetailsPresenter.initialize();
   }

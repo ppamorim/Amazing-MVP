@@ -15,9 +15,9 @@
 */
 package com.amazingMvp.ui.presenter;
 
-import com.amazingMvp.domain.interactors.GetGenres;
-import com.amazingMvp.domain.model.Genre;
 import com.amazingMvp.navigation.GenreNavigator;
+import com.amazingmvprules.domain.interactors.GetGenres;
+import com.amazingmvprules.domain.model.Genre;
 import java.util.Collection;
 import javax.inject.Inject;
 
@@ -67,7 +67,6 @@ public class GenrePresenterImpl implements GenrePresenter {
 
   private void loadCameras() {
     showLoading();
-    getGenres.getResources(view.getResources());
     getGenres.execute(new GetGenres.Callback() {
       @Override public void onGenresLoaded(Collection<Genre> genres) {
         showGenres(genres);

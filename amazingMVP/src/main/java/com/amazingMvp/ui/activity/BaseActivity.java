@@ -23,24 +23,16 @@ import butterknife.Bind;
 import com.amazingMvp.AmazingMvpApplication;
 import com.amazingMvp.R;
 import com.amazingMvp.di.ActivityModule;
-import com.amazingMvp.di.SyncModule;
 import com.amazingMvp.di.components.DaggerGenreFragmentComponent;
-import com.amazingMvp.di.components.DaggerSyncComponent;
 import com.amazingMvp.di.components.GenreFragmentComponent;
-import com.amazingMvp.di.components.SyncComponent;
 import com.amazingMvp.ui.fragment.GenreFragment;
-import com.amazingMvp.ui.presenter.SyncPresenter;
 import com.ogaclejapan.smarttablayout.SmartTabLayout;
 import com.ogaclejapan.smarttablayout.utils.v4.FragmentPagerItemAdapter;
 import com.ogaclejapan.smarttablayout.utils.v4.FragmentPagerItems;
-import javax.inject.Inject;
 
-public class BaseActivity extends AbstractActivity implements SyncPresenter.View {
+public class BaseActivity extends AbstractActivity {
 
-  private SyncComponent syncComponent;
   private GenreFragmentComponent genreFragmentComponent;
-
-  @Inject SyncPresenter syncPresenter;
 
   @Bind(R.id.toolbar) Toolbar toolbar;
   @Bind(R.id.toolbar_title) TextView toolbarTitle;
@@ -53,22 +45,8 @@ public class BaseActivity extends AbstractActivity implements SyncPresenter.View
 
   @Override protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
-    syncComponent().inject(this);
-    syncPresenter.setView(this);
-    syncPresenter.initialize();
     configToolbar();
-  }
-
-  @Override public boolean isReady() {
-    return !isFinishing();
-  }
-
-  @Override public void onEndSync() {
     configViewPager();
-  }
-
-  @Override public void onFailSync() {
-
   }
 
   private void configToolbar() {
@@ -83,16 +61,6 @@ public class BaseActivity extends AbstractActivity implements SyncPresenter.View
         .create());
     viewPager.setAdapter(adapter);
     smartTabLayout.setViewPager(viewPager);
-  }
-
-  public SyncComponent syncComponent() {
-    if (syncComponent == null) {
-      syncComponent = DaggerSyncComponent.builder()
-          .applicationComponent(((AmazingMvpApplication) getApplication()).component())
-          .syncModule(new SyncModule())
-          .build();
-    }
-    return syncComponent;
   }
 
   public GenreFragmentComponent genreFragmentComponent() {

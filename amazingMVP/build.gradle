@@ -4,7 +4,7 @@ apply plugin: 'checkstyle'
 
 android {
   compileSdkVersion 23
-  buildToolsVersion "23.0.1"
+  buildToolsVersion "23.0.2"
 
   defaultConfig {
     applicationId "com.amazing_mvp"
@@ -68,10 +68,9 @@ repositories {
 }
 
 dependencies {
-  compile 'com.github.ppamorim:dragger:1.0.5.1'
-  compile 'com.github.ppamorim:recyclerrenderers:1.2.2'
-  compile 'com.android.support:appcompat-v7:23.0.1'
-  compile 'com.android.support:recyclerview-v7:23.0.1'
+  compile project(':amazing-mvp-rules')
+  compile 'com.android.support:appcompat-v7:23.1.1'
+  compile 'com.android.support:recyclerview-v7:23.1.1'
   compile 'jp.wasabeef:recyclerview-animators:1.1.3@aar'
   compile 'com.github.rey5137:material:1.0.0'
   compile 'com.ogaclejapan.smarttablayout:library:1.1.0@aar'

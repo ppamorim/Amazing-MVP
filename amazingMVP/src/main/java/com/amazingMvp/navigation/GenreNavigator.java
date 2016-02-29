@@ -17,8 +17,8 @@ package com.amazingMvp.navigation;
 
 import android.app.Activity;
 import android.content.Intent;
-import com.amazingMvp.domain.model.Genre;
 import com.amazingMvp.ui.activity.SubGenreActivity;
+import com.amazingmvprules.domain.model.Genre;
 import javax.inject.Inject;
 import org.parceler.Parcels;
 
@@ -30,7 +30,7 @@ public class GenreNavigator extends BaseNavigator implements Navigator {
 
   public void openGenreActivity(Genre genre) {
     Intent intent = new Intent(getContext(), SubGenreActivity.class);
-    intent.putExtra(Genre.TAG, Parcels.wrap(genre));
+    //intent.putExtra(Genre.TAG, Parcels.wrap(genre));
     startActivity(intent);
   }
 

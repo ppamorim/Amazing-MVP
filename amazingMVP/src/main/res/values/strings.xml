@@ -11,26 +11,6 @@
   <string name="house">House</string>
   <string name="techno">Techno</string>
 
-  <string-array name="house_array">
-    <item>Acid House</item>
-    <item>Ambient House</item>
-    <item>Chicago House</item>
-    <item>Electro House</item>
-    <item>Deep House</item>
-    <item>Soulful House</item>
-    <item>Funky House</item>
-    <item>G House</item>
-    <item>Tech House</item>
-    <item>Tribal House</item>
-  </string-array>
-
-  <string-array name="techno_array">
-    <item>Acid Techno</item>
-    <item>Detroit Techno</item>
-    <item>Minimal Techno</item>
-    <item>Techno</item>
-  </string-array>
-
   <string-array name="techno_image_array" formatted="false">
     <item>http://www.vintagesynth.com/roland/images/tb303big.jpg</item>
     <item>https://staging-thump-images.vice.com/images/2015/1/27/tresors-founder-wants-to-build-a-berlin-style-techno-club-in-detroit-does-the-city-need-it-1422362657487.jpg</item>

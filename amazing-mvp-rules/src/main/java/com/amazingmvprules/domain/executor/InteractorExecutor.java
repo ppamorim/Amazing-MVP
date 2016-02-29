@@ -13,8 +13,8 @@
 * See the License for the specific language governing permissions and
 * limitations under the License.
 */
-package com.amazingMvp.executor;
+package com.amazingmvprules.domain.executor;
 
-public interface MainThread {
-  void post(final Runnable runnable);
+public interface InteractorExecutor {
+  void run(Interactor interactor);
 }

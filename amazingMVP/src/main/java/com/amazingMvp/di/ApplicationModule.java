@@ -18,11 +18,10 @@ package com.amazingMvp.di;
 import android.app.Application;
 import android.view.LayoutInflater;
 
-import com.amazingMvp.executor.InteractorExecutor;
-import com.amazingMvp.executor.MainThread;
-import com.amazingMvp.executor.MainThreadImpl;
-import com.amazingMvp.executor.ThreadExecutor;
-
+import com.amazingmvprules.domain.executor.InteractorExecutor;
+import com.amazingmvprules.domain.executor.MainThread;
+import com.amazingmvprules.domain.executor.MainThreadImpl;
+import com.amazingmvprules.domain.executor.ThreadExecutor;
 import dagger.Module;
 import dagger.Provides;
 import javax.inject.Singleton;

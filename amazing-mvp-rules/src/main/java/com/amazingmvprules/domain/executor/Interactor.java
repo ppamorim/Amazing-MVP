@@ -13,12 +13,8 @@
 * See the License for the specific language governing permissions and
 * limitations under the License.
 */
-package com.amazingMvp.domain.interactors;
+package com.amazingmvprules.domain.executor;
 
-public class BaseImpl {
-  public void validateArguments(Object callback) {
-    if (callback == null) {
-      throw new IllegalArgumentException("Callback parameter can't be null");
-    }
-  }
+public interface Interactor {
+  void run();
 }

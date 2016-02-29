@@ -10,13 +10,9 @@ public abstract class AbstractActivity extends AppCompatActivity {
   @Override protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(getContentViewId());
-    injectViews();
+    ButterKnife.bind(this);
   }
 
   protected abstract int getContentViewId();
-
-  private void injectViews() {
-    ButterKnife.bind(this);
-  }
 
 }

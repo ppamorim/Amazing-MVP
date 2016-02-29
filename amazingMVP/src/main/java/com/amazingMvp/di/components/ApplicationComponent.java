@@ -18,8 +18,8 @@ package com.amazingMvp.di.components;
 import android.app.Application;
 import com.amazingMvp.AmazingMvpApplication;
 import com.amazingMvp.di.ApplicationModule;
-import com.amazingMvp.executor.InteractorExecutor;
-import com.amazingMvp.executor.MainThread;
+import com.amazingmvprules.domain.executor.InteractorExecutor;
+import com.amazingmvprules.domain.executor.MainThread;
 import dagger.Component;
 import javax.inject.Singleton;
 

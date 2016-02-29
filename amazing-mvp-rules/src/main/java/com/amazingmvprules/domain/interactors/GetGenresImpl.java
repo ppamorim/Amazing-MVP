@@ -13,15 +13,14 @@
 * See the License for the specific language governing permissions and
 * limitations under the License.
 */
-package com.amazingMvp.domain.interactors;
+package com.amazingmvprules.domain.interactors;
 
-import android.content.res.Resources;
-import com.amazingMvp.R;
-import com.amazingMvp.domain.model.Genre;
-import com.amazingMvp.executor.Interactor;
-import com.amazingMvp.executor.InteractorExecutor;
-import com.amazingMvp.executor.MainThread;
-import com.amazingMvp.util.DebugUtil;
+import com.amazingmvprules.domain.executor.Interactor;
+import com.amazingmvprules.domain.executor.InteractorExecutor;
+import com.amazingmvprules.domain.executor.MainThread;
+import com.amazingmvprules.domain.model.Genre;
+import com.amazingmvprules.domain.util.DebugUtil;
+import com.amazingmvprules.domain.util.StubData;
 import java.util.ArrayList;
 import javax.inject.Inject;
 
@@ -30,7 +29,6 @@ public class GetGenresImpl extends BaseImpl implements Interactor, GetGenres {
   private final InteractorExecutor interactorExecutor;
   private final MainThread mainThread;
   private Callback callback;
-  private Resources resources;
 
   @Inject GetGenresImpl(InteractorExecutor interactorExecutor, MainThread mainThread) {
     this.interactorExecutor = interactorExecutor;
@@ -57,10 +55,6 @@ public class GetGenresImpl extends BaseImpl implements Interactor, GetGenres {
       }
       notifyConnectionError();
     }
-  }
-
-  @Override public void getResources(Resources resources) {
-    this.resources = resources;
   }
 
   private void notifyConnectionSuccess(final ArrayList<Genre> genres) {
@@ -90,13 +84,14 @@ public class GetGenresImpl extends BaseImpl implements Interactor, GetGenres {
   private ArrayList<Genre> createItems() {
     ArrayList<Genre> items = new ArrayList<>();
 
-    String[] title = resources.getStringArray(R.array.techno_array);
-    String[] urlImage = resources.getStringArray(R.array.techno_image_array);
-    String[] details = resources.getStringArray(R.array.techno_array_details);
+    String[] title = StubData.TECHNO_ARRAY;
+    String[] urlImage = StubData.TECHNO_IMAGE;
+    String[] details = StubData.TECHNO_DETAIL;
 
-    for (int i = 0; i < title.length; i++) {
+    for (int i = 0, count = title.length; i < count; i++) {
       items.add(new Genre(title[i], urlImage[i], details[i]));
     }
+
     return items;
   }
 

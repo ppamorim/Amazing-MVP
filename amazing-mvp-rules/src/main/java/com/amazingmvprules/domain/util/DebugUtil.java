@@ -13,8 +13,16 @@
 * See the License for the specific language governing permissions and
 * limitations under the License.
 */
-package com.amazingMvp.executor;
+package com.amazingmvprules.domain.util;
 
-public interface InteractorExecutor {
-  void run(Interactor interactor);
+public class DebugUtil {
+
+  public static final boolean DEBUG = true;
+
+  public static void log(String log) {
+    if (DEBUG) {
+      System.out.println("LOG: " + log);
+    }
+  }
+
 }

@@ -13,18 +13,12 @@
 * See the License for the specific language governing permissions and
 * limitations under the License.
 */
-package com.amazingMvp.domain.interactors;
+package com.amazingmvprules.domain.interactors;
 
-import android.content.res.Resources;
-import com.amazingMvp.domain.model.Genre;
-import java.util.Collection;
-
-public interface GetGenres {
-  void getResources(Resources resources);
-  void execute(Callback callback);
-  interface Callback {
-    void onGenresLoaded(final Collection<Genre> genres);
-    void onGenresEmpty();
-    void onErrorLoad();
+public class BaseImpl {
+  public void validateArguments(Object callback) {
+    if (callback == null) {
+      throw new IllegalArgumentException("Callback parameter can't be null");
+    }
   }
 }

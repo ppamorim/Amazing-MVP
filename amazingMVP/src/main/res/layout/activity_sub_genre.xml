@@ -1,12 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.github.ppamorim.dragger.DraggerView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:dragger_layout="http://schemas.android.com/apk/res-auto"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    dragger_layout:drag_view_id="@+id/drag_view"
-    dragger_layout:shadow_view_id="@+id/shadow_view"
-    dragger_layout:drag_position="top">
+    android:layout_height="match_parent">
 
   <FrameLayout
       android:id="@+id/shadow_view"
@@ -48,4 +44,4 @@
 
   </LinearLayout>
 
-</com.github.ppamorim.dragger.DraggerView>
+</FrameLayout>

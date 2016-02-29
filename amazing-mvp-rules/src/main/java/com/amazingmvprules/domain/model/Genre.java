@@ -13,18 +13,15 @@
 * See the License for the specific language governing permissions and
 * limitations under the License.
 */
-package com.amazingMvp.domain.model;
+package com.amazingmvprules.domain.model;
 
-import com.amazingMvp.R;
-import com.github.ppamorim.recyclerrenderers.interfaces.Renderable;
 import org.parceler.Parcel;
 import org.parceler.ParcelConstructor;
 import org.parceler.ParcelProperty;
 
 @Parcel
-public class Genre implements Renderable {
+public class Genre {
 
-  public static final String TAG = "Genre";
   public static final String TITLE = "title";
   public static final String IMAGE = "image";
   public static final String DETAILS = "details";
@@ -67,10 +64,6 @@ public class Genre implements Renderable {
 
   public void setDetails(String details) {
     this.details = details;
-  }
-
-  @Override public int getRenderableResourceId(int i) {
-    return R.layout.adapter_genre;
   }
 
 }

@@ -24,14 +24,10 @@ import android.widget.FrameLayout;
 import android.widget.RelativeLayout;
 import butterknife.Bind;
 import com.amazingMvp.R;
-import com.amazingMvp.domain.model.Genre;
 import com.amazingMvp.ui.activity.BaseActivity;
 import com.amazingMvp.ui.presenter.GenrePresenter;
-import com.amazingMvp.ui.renderers.factory.Factory;
 import com.amazingMvp.util.ViewUtil;
-import com.github.ppamorim.recyclerrenderers.adapter.RendererAdapter;
-import com.github.ppamorim.recyclerrenderers.builder.RendererBuilder;
-import com.github.ppamorim.recyclerrenderers.interfaces.Renderable;
+import com.amazingmvprules.domain.model.Genre;
 import icepick.Icepick;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -86,11 +82,11 @@ public class GenreFragment extends AbstractFragment implements GenrePresenter.Vi
   }
 
   @Override public void renderGenres(Collection<Genre> genres) {
-    ArrayList<Renderable> renderable = new ArrayList<>();
-    renderable.addAll(genres);
-    recyclerView.setAdapter(new AlphaInAnimationAdapter(
-            new RendererAdapter(renderable, new RendererBuilder(new Factory(onGenreCallback)),
-                LayoutInflater.from(getActivity()))));
+    //ArrayList<Renderable> renderable = new ArrayList<>();
+    //renderable.addAll(genres);
+    //recyclerView.setAdapter(new AlphaInAnimationAdapter(
+    //        new RendererAdapter(renderable, new RendererBuilder(new Factory(onGenreCallback)),
+    //            LayoutInflater.from(getActivity()))));
   }
 
   @Override public void showGenres() {
@@ -120,11 +116,5 @@ public class GenreFragment extends AbstractFragment implements GenrePresenter.Vi
     loadingLayout.setVisibility(View.GONE);
     emptyLayout.setVisibility(View.GONE);
   }
-
-  private Factory.GenreCallback onGenreCallback = new Factory.GenreCallback() {
-    @Override public void onGenreClick(Genre genre) {
-      genrePresenter.onGenreClick(genre);
-    }
-  };
 
 }

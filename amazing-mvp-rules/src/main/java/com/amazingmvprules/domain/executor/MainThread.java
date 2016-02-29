@@ -13,12 +13,8 @@
 * See the License for the specific language governing permissions and
 * limitations under the License.
 */
-package com.amazingMvp.domain.interactors;
+package com.amazingmvprules.domain.executor;
 
-public interface GetSync {
-  void execute(Callback callback);
-  interface Callback {
-    void onSyncEnd();
-    void onSyncFail();
-  }
+public interface MainThread {
+  void post(final Runnable runnable);
 }
