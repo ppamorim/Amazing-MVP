@@ -49,7 +49,7 @@ License
     See the License for the specific language governing permissions and
     limitations under the License.
 
-[2]: https://github.com/ppamorim/Amazing-MVP/wiki
+[2]: http://rs1106.pbsrc.com/albums/h369/Michelle_Solo/tumblr_lkbkf9sMsf1qdo7yb.gif
 [3]: https://github.com/ppamorim/
 [4]: https://github.com/JorgeCastilloPrz
 [5]: https://github.com/JakeWharton/butterknife
