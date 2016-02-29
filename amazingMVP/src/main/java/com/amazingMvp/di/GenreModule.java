@@ -13,11 +13,11 @@
 * See the License for the specific language governing permissions and
 * limitations under the License.
 */
-package com.amazingMvp.di;
+package com.amazingmvp.di;
 
-import com.amazingMvp.di.scopes.ActivityScope;
-import com.amazingMvp.ui.presenter.GenrePresenter;
-import com.amazingMvp.ui.presenter.GenrePresenterImpl;
+import com.amazingmvp.di.scopes.ActivityScope;
+import com.amazingmvprules.presenter.GenrePresenter;
+import com.amazingmvprules.presenter.GenrePresenterImpl;
 import com.amazingmvprules.domain.interactors.GetGenres;
 import com.amazingmvprules.domain.interactors.GetGenresImpl;
 import dagger.Module;

@@ -13,13 +13,13 @@
 * See the License for the specific language governing permissions and
 * limitations under the License.
 */
-package com.amazingMvp.di.components;
+package com.amazingmvp.di.components;
 
 import android.app.Application;
-import com.amazingMvp.AmazingMvpApplication;
-import com.amazingMvp.di.ApplicationModule;
-import com.amazingmvprules.domain.executor.InteractorExecutor;
-import com.amazingmvprules.domain.executor.MainThread;
+import com.amazingmvp.AmazingMvpApplication;
+import com.amazingmvp.di.ApplicationModule;
+import com.github.ppamorim.threadexecutor.InteractorExecutor;
+import com.github.ppamorim.threadexecutor.MainThread;
 import dagger.Component;
 import javax.inject.Singleton;
 

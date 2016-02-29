@@ -13,80 +13,66 @@
 * See the License for the specific language governing permissions and
 * limitations under the License.
 */
-package com.amazingMvp.ui.fragment;
+package com.amazingmvp.ui.fragment;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.RecyclerView;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 import butterknife.Bind;
-import com.amazingMvp.R;
-import com.amazingMvp.ui.activity.BaseActivity;
-import com.amazingMvp.ui.presenter.GenrePresenter;
-import com.amazingMvp.util.ViewUtil;
+import com.amazingmvp.AmazingMvpApplication;
+import com.amazingmvp.R;
+import com.amazingmvp.di.ActivityModule;
+import com.amazingmvp.di.components.DaggerGenreFragmentComponent;
+import com.amazingmvp.di.components.GenreFragmentComponent;
+import com.amazingmvp.ui.adapter.GenreAdapter;
 import com.amazingmvprules.domain.model.Genre;
-import icepick.Icepick;
+import com.amazingmvprules.domain.util.Tags;
+import com.amazingmvprules.presenter.GenrePresenter;
 import java.util.ArrayList;
-import java.util.Collection;
 import javax.inject.Inject;
-import jp.wasabeef.recyclerview.animators.adapters.AlphaInAnimationAdapter;
 
 public class GenreFragment extends AbstractFragment implements GenrePresenter.View {
 
+  private GenreFragmentComponent genreFragmentComponent;
+
   @Inject GenrePresenter genrePresenter;
 
-  @Bind(R.id.layout_error) FrameLayout errorLayout;
-  @Bind(R.id.layout_empty) FrameLayout emptyLayout;
+  @Bind(R.id.layout_error) TextView errorLayout;
+  @Bind(R.id.layout_empty) TextView emptyLayout;
   @Bind(R.id.layout_loading) RelativeLayout loadingLayout;
   @Bind(R.id.recycler_view) RecyclerView recyclerView;
 
-  @Override protected int getFragmentLayout() {
+  @Override protected int getLayoutId() {
     return R.layout.fragment_genre;
   }
 
   @Override public void onActivityCreated(@Nullable Bundle savedInstanceState) {
     super.onActivityCreated(savedInstanceState);
-    ((BaseActivity) getActivity()).genreFragmentComponent().inject(this);
-    ViewUtil.configRecyclerView(getContext(), recyclerView);
+    genreFragmentComponent().inject(this);
     genrePresenter.setView(this);
-    genrePresenter.initialize();
+    genrePresenter.restoreInstance(savedInstanceState);
+    genrePresenter.requestGenres(getArguments().getInt(Tags.TAG_GENRE));
   }
 
-  @Override public void onResume() {
-    super.onResume();
-    genrePresenter.resume();
-  }
-
-  @Override public void onPause() {
-    genrePresenter.pause();
-    super.onPause();
+  @Override public void onDestroy() {
+    genrePresenter.destroy();
+    super.onDestroy();
   }
 
   @Override public void onSaveInstanceState(Bundle outState) {
-    Icepick.saveInstanceState(this, outState);
-    super.onSaveInstanceState(outState);
-  }
-
-  @Override public void onViewStateRestored(@Nullable Bundle savedInstanceState) {
-    super.onViewStateRestored(savedInstanceState);
-    if (savedInstanceState != null) {
-      Icepick.restoreInstanceState(this, savedInstanceState);
-    }
+    super.onSaveInstanceState(genrePresenter.saveInstance(outState));
   }
 
   @Override public boolean isReady() {
     return isAdded();
   }
 
-  @Override public void renderGenres(Collection<Genre> genres) {
-    //ArrayList<Renderable> renderable = new ArrayList<>();
-    //renderable.addAll(genres);
-    //recyclerView.setAdapter(new AlphaInAnimationAdapter(
-    //        new RendererAdapter(renderable, new RendererBuilder(new Factory(onGenreCallback)),
-    //            LayoutInflater.from(getActivity()))));
+  @Override public void renderGenres(ArrayList<Genre> genres) {
+    recyclerView.setAdapter(new GenreAdapter(genres));
   }
 
   @Override public void showGenres() {
@@ -115,6 +101,16 @@ public class GenreFragment extends AbstractFragment implements GenrePresenter.Vi
     recyclerView.setVisibility(View.GONE);
     loadingLayout.setVisibility(View.GONE);
     emptyLayout.setVisibility(View.GONE);
+  }
+
+  public GenreFragmentComponent genreFragmentComponent() {
+    if (genreFragmentComponent == null) {
+      genreFragmentComponent = DaggerGenreFragmentComponent.builder()
+          .applicationComponent(((AmazingMvpApplication) getActivity().getApplication()).component())
+          .activityModule(new ActivityModule(getActivity()))
+          .build();
+    }
+    return genreFragmentComponent;
   }
 
 }

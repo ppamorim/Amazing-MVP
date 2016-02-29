@@ -13,17 +13,21 @@
 * See the License for the specific language governing permissions and
 * limitations under the License.
 */
-package com.amazingmvprules.domain.interactors;
+package com.amazingmvprules.presenter;
 
-import android.os.Parcelable;
 import com.amazingmvprules.domain.model.Genre;
+import java.util.ArrayList;
 
-public interface GetGenreDetails {
-  void execute(Callback callback);
-  void setParcelable(Parcelable parcelable);
-  interface Callback {
-    void onGenreLoaded(final Genre genre);
-    void onGenresEmpty();
+public interface GenrePresenter extends Presenter {
+  void requestGenres(int tag);
+  void setView(View view);
+  interface View {
+    boolean isReady();
+    void renderGenres(ArrayList<Genre> genres);
+    void showGenres();
+    void showLoading();
+    void showError();
+    void showEmpty();
   }
-}
 
+}

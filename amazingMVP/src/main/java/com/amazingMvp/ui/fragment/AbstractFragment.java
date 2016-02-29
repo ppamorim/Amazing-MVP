@@ -13,7 +13,7 @@
 * See the License for the specific language governing permissions and
 * limitations under the License.
 */
-package com.amazingMvp.ui.fragment;
+package com.amazingmvp.ui.fragment;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -22,31 +22,36 @@ import android.view.View;
 import android.view.ViewGroup;
 import butterknife.ButterKnife;
 
+/**
+ * This class allow a simple representation of Fragment(v4),
+ * this will simplify the build of Fragment and reducing
+ * the boiler plate.
+ */
 public abstract class AbstractFragment extends Fragment {
 
+  /**
+   * This method will inflate the view and apply
+   * the binder of ButterKnife in this view.
+   *
+   * @param inflater Instance of LayoutInflater.
+   * @param container The parent of Fragment, a ViewPager.
+   * @param savedInstanceState Saved instance of the
+   * fragment, not used here.
+   * @return The view inflated.
+   */
   @Override public View onCreateView(LayoutInflater inflater, ViewGroup container,
       Bundle savedInstanceState) {
-    return inflater.inflate(getFragmentLayout(), container, false);
-  }
-
-  @Override public void onViewCreated(View view, Bundle savedInstanceState) {
-    super.onViewCreated(view, savedInstanceState);
-    injectViews(view);
-  }
-
-  @Override public void onDestroyView() {
-    super.onDestroyView();
-    resetViews();
-  }
-
-  protected abstract int getFragmentLayout();
-
-  private void injectViews(final View view) {
+    View view = inflater.inflate(getLayoutId(), container, false);
     ButterKnife.bind(this, view);
+    return view;
   }
 
-  private void resetViews() {
-    ButterKnife.unbind(this);
-  }
+  /**
+   * This abstract method will return the layout
+   * of the view that the fragment want to load.
+   *
+   * @return ResID of Layout.
+   */
+  protected abstract int getLayoutId();
 
 }

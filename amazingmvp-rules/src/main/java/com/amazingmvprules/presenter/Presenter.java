@@ -13,6 +13,12 @@
 * See the License for the specific language governing permissions and
 * limitations under the License.
 */
-package com.amazingMvp.navigation;
+package com.amazingmvprules.presenter;
 
-public interface Navigator { }
+import android.os.Bundle;
+
+public interface Presenter {
+  Bundle saveInstance(Bundle instance);
+  void restoreInstance(Bundle instance);
+  void destroy();
+}

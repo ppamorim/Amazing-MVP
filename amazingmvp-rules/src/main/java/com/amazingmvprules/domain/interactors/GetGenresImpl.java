@@ -15,12 +15,13 @@
 */
 package com.amazingmvprules.domain.interactors;
 
-import com.amazingmvprules.domain.executor.Interactor;
-import com.amazingmvprules.domain.executor.InteractorExecutor;
-import com.amazingmvprules.domain.executor.MainThread;
 import com.amazingmvprules.domain.model.Genre;
 import com.amazingmvprules.domain.util.DebugUtil;
 import com.amazingmvprules.domain.util.StubData;
+import com.amazingmvprules.domain.util.Tags;
+import com.github.ppamorim.threadexecutor.Interactor;
+import com.github.ppamorim.threadexecutor.InteractorExecutor;
+import com.github.ppamorim.threadexecutor.MainThread;
 import java.util.ArrayList;
 import javax.inject.Inject;
 
@@ -29,6 +30,7 @@ public class GetGenresImpl extends BaseImpl implements Interactor, GetGenres {
   private final InteractorExecutor interactorExecutor;
   private final MainThread mainThread;
   private Callback callback;
+  private int tag;
 
   @Inject GetGenresImpl(InteractorExecutor interactorExecutor, MainThread mainThread) {
     this.interactorExecutor = interactorExecutor;
@@ -41,9 +43,13 @@ public class GetGenresImpl extends BaseImpl implements Interactor, GetGenres {
     this.interactorExecutor.run(this);
   }
 
+  @Override public void setTag(int tag) {
+    this.tag = tag;
+  }
+
   @Override public void run() {
     try {
-      ArrayList<Genre> cameras = createItems();
+      ArrayList<Genre> cameras = createItems(tag);
       if (cameras.size() > 0) {
         notifyConnectionSuccess(cameras);
       } else {
@@ -81,12 +87,12 @@ public class GetGenresImpl extends BaseImpl implements Interactor, GetGenres {
     });
   }
 
-  private ArrayList<Genre> createItems() {
+  private ArrayList<Genre> createItems(int tag) {
     ArrayList<Genre> items = new ArrayList<>();
 
-    String[] title = StubData.TECHNO_ARRAY;
-    String[] urlImage = StubData.TECHNO_IMAGE;
-    String[] details = StubData.TECHNO_DETAIL;
+    String[] title = tag == Tags.TECHNO ? StubData.TECHNO_ARRAY : StubData.HOUSE_ARRAY;
+    String[] urlImage = tag == Tags.TECHNO ? StubData.TECHNO_IMAGE : StubData.HOUSE_IMAGE;
+    String[] details = tag == Tags.TECHNO ? StubData.TECHNO_DETAIL :  StubData.HOUSE_DETAIL;
 
     for (int i = 0, count = title.length; i < count; i++) {
       items.add(new Genre(title[i], urlImage[i], details[i]));

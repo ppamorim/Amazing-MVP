@@ -13,15 +13,14 @@
 * See the License for the specific language governing permissions and
 * limitations under the License.
 */
-package com.amazingMvp.di;
+package com.amazingmvp.di;
 
 import android.app.Application;
-import android.view.LayoutInflater;
 
-import com.amazingmvprules.domain.executor.InteractorExecutor;
-import com.amazingmvprules.domain.executor.MainThread;
-import com.amazingmvprules.domain.executor.MainThreadImpl;
-import com.amazingmvprules.domain.executor.ThreadExecutor;
+import com.github.ppamorim.threadexecutor.InteractorExecutor;
+import com.github.ppamorim.threadexecutor.MainThread;
+import com.github.ppamorim.threadexecutor.MainThreadImpl;
+import com.github.ppamorim.threadexecutor.ThreadExecutor;
 import dagger.Module;
 import dagger.Provides;
 import javax.inject.Singleton;
@@ -36,10 +35,6 @@ import javax.inject.Singleton;
 
   @Provides @Singleton Application provideApplicationContext() {
     return this.application;
-  }
-
-  @Provides @Singleton LayoutInflater provideLayoutInflater() {
-    return LayoutInflater.from(application);
   }
 
   @Provides @Singleton InteractorExecutor provideThreadExecutor(ThreadExecutor executor) {

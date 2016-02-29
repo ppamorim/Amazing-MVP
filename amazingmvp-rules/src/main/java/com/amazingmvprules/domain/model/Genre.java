@@ -15,28 +15,21 @@
 */
 package com.amazingmvprules.domain.model;
 
-import org.parceler.Parcel;
-import org.parceler.ParcelConstructor;
-import org.parceler.ParcelProperty;
+import android.os.Parcelable;
 
-@Parcel
-public class Genre {
+public class Genre implements Parcelable {
 
   public static final String TITLE = "title";
   public static final String IMAGE = "image";
   public static final String DETAILS = "details";
 
-  @ParcelProperty(TITLE) String title;
-  @ParcelProperty(IMAGE) String image;
-  @ParcelProperty(DETAILS) String details;
+  private String title;
+  private String image;
+  private String details;
 
   public Genre() { }
 
-  @ParcelConstructor
-  public Genre(
-      @ParcelProperty(TITLE) String title,
-      @ParcelProperty(IMAGE) String image,
-      @ParcelProperty(DETAILS) String details) {
+  public Genre(String title, String image, String details) {
     this.title = title;
     this.image = image;
     this.details = details;
@@ -64,6 +57,14 @@ public class Genre {
 
   public void setDetails(String details) {
     this.details = details;
+  }
+
+  @Override public int describeContents() {
+    return 0;
+  }
+
+  @Override public void writeToParcel(android.os.Parcel parcel, int i) {
+
   }
 
 }

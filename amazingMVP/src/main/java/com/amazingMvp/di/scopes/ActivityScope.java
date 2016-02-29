@@ -1,4 +1,4 @@
-package com.amazingMvp.di.scopes;
+package com.amazingmvp.di.scopes;
 
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;

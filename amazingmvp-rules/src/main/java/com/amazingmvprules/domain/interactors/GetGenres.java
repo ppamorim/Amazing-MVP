@@ -13,8 +13,17 @@
 * See the License for the specific language governing permissions and
 * limitations under the License.
 */
-package com.amazingmvprules.domain.executor;
+package com.amazingmvprules.domain.interactors;
 
-public interface InteractorExecutor {
-  void run(Interactor interactor);
+import com.amazingmvprules.domain.model.Genre;
+import java.util.ArrayList;
+
+public interface GetGenres {
+  void setTag(int tag);
+  void execute(Callback callback);
+  interface Callback {
+    void onGenresLoaded(final ArrayList<Genre> genres);
+    void onGenresEmpty();
+    void onErrorLoad();
+  }
 }

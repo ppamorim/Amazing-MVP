@@ -1,1 +1,1 @@
-include ':amazingMVP', ':amazing-mvp-rules'
+include ':amazingmvp', ':amazingmvp-rules'

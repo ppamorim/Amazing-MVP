@@ -13,12 +13,12 @@
 * See the License for the specific language governing permissions and
 * limitations under the License.
 */
-package com.amazingMvp;
+package com.amazingmvp;
 
 import android.app.Application;
-import com.amazingMvp.di.ApplicationModule;
-import com.amazingMvp.di.components.ApplicationComponent;
-import com.amazingMvp.di.components.DaggerApplicationComponent;
+import com.amazingmvp.di.ApplicationModule;
+import com.amazingmvp.di.components.ApplicationComponent;
+import com.amazingmvp.di.components.DaggerApplicationComponent;
 import com.facebook.drawee.backends.pipeline.Fresco;
 
 public class AmazingMvpApplication extends Application {

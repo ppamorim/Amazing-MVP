@@ -13,13 +13,13 @@
 * See the License for the specific language governing permissions and
 * limitations under the License.
 */
-package com.amazingMvp.di.components;
+package com.amazingmvp.di.components;
 
-import com.amazingMvp.di.ActivityModule;
-import com.amazingMvp.di.GenreModule;
-import com.amazingMvp.di.scopes.ActivityScope;
-import com.amazingMvp.ui.fragment.GenreFragment;
-import com.amazingMvp.ui.presenter.GenrePresenter;
+import com.amazingmvp.di.ActivityModule;
+import com.amazingmvp.di.GenreModule;
+import com.amazingmvp.di.scopes.ActivityScope;
+import com.amazingmvp.ui.fragment.GenreFragment;
+import com.amazingmvprules.presenter.GenrePresenter;
 import com.amazingmvprules.domain.interactors.GetGenres;
 import dagger.Component;
 

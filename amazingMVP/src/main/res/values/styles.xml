@@ -13,16 +13,4 @@
     <item name="android:windowContentOverlay">@null</item>
   </style>
 
-  <style name="AppTheme.Base.Animation" parent="AppTheme.Base">
-    <item name="android:windowIsTranslucent">true</item>
-    <item name="android:windowBackground">@android:color/transparent</item>
-    <item name="android:windowNoTitle">true</item>
-    <item name="windowActionBar">false</item>
-    <item name="android:windowAnimationStyle">@null</item>
-  </style>
-
-  <style name="ColorsCircularProgressDrawableStyle" parent="Material.Drawable.CircularProgress">
-    <item name="cpd_strokeColors">@array/progress_colors</item>
-  </style>
-
 </resources>

@@ -13,23 +13,22 @@
 * See the License for the specific language governing permissions and
 * limitations under the License.
 */
-package com.amazingMvp.ui.presenter;
+package com.amazingmvprules.presenter;
 
-import com.amazingMvp.navigation.GenreNavigator;
+import android.os.Bundle;
 import com.amazingmvprules.domain.interactors.GetGenres;
 import com.amazingmvprules.domain.model.Genre;
-import java.util.Collection;
+import com.amazingmvprules.domain.util.Tags;
+import java.util.ArrayList;
 import javax.inject.Inject;
 
 public class GenrePresenterImpl implements GenrePresenter {
 
   private View view;
-  private Collection<Genre> currentGenresLoaded;
-  private GenreNavigator genreNavigator;
+  private ArrayList<Genre> currentGenresLoaded;
   private GetGenres getGenres;
 
-  @Inject GenrePresenterImpl(GenreNavigator genreNavigator, GetGenres getGenres) {
-    this.genreNavigator = genreNavigator;
+  @Inject GenrePresenterImpl(GetGenres getGenres) {
     this.getGenres = getGenres;
   }
 
@@ -40,46 +39,46 @@ public class GenrePresenterImpl implements GenrePresenter {
     this.view = view;
   }
 
-  @Override public void initialize() {
-    loadCameras();
+  @Override public void requestGenres(int tag) {
+    if(currentGenresLoaded == null) {
+      showLoading();
+      getGenres.setTag(tag);
+      getGenres.execute(new GetGenres.Callback() {
+        @Override public void onGenresLoaded(ArrayList<Genre> genres) {
+          showGenres(genres);
+        }
+
+        @Override public void onGenresEmpty() {
+          showEmpty();
+        }
+
+        @Override public void onErrorLoad() {
+          showError();
+        }
+      });
+    } else {
+      showGenres(currentGenresLoaded);
+    }
   }
 
-  @Override public void resume() { }
+  @Override public Bundle saveInstance(Bundle instance) {
+    if (instance != null && currentGenresLoaded != null) {
+      instance.putParcelableArrayList(Tags.GENRES, currentGenresLoaded);
+    }
+    return instance;
+  }
 
-  @Override public void pause() {
+  @Override public void restoreInstance(Bundle instance) {
+    if (instance != null && instance.containsKey(Tags.GENRES)) {
+      currentGenresLoaded = instance.getParcelableArrayList(Tags.GENRES);
+    }
+  }
+
+  @Override public void destroy() {
     if (currentGenresLoaded != null) {
       currentGenresLoaded.clear();
     }
     currentGenresLoaded = null;
-  }
-
-  @Override public void onGenreClick(Genre genre) {
-    genreNavigator.openGenreActivity(genre);
-  }
-
-  @Override public void restoreLoadedGenres(Collection<Genre> genres) {
-    showGenres(currentGenresLoaded);
-  }
-
-  @Override public Collection<Genre> getCurrentGenresLoaded() {
-    return currentGenresLoaded;
-  }
-
-  private void loadCameras() {
-    showLoading();
-    getGenres.execute(new GetGenres.Callback() {
-      @Override public void onGenresLoaded(Collection<Genre> genres) {
-        showGenres(genres);
-      }
-
-      @Override public void onGenresEmpty() {
-        showEmpty();
-      }
-
-      @Override public void onErrorLoad() {
-        showError();
-      }
-    });
   }
 
   private void showLoading() {
@@ -88,7 +87,7 @@ public class GenrePresenterImpl implements GenrePresenter {
     }
   }
 
-  private void showGenres(Collection<Genre> genres) {
+  private void showGenres(ArrayList<Genre> genres) {
     if (view.isReady() && genres != null) {
       currentGenresLoaded = genres;
       view.renderGenres(genres);
