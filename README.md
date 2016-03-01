@@ -57,3 +57,4 @@ License
 [13]: https://github.com/facebook/fresco
 [16]: https://github.com/google/dagger
 [18]: https://github.com/JakeWharton/butterknife
+[19]: https://github.com/ppamorim/ThreadExecutor
