@@ -1,5 +1,5 @@
 /*
-* Copyright (C) 2015 Pedro Paulo de Amorim
+* Copyright (C) 2016 Pedro Paulo de Amorim
 *
 * Licensed under the Apache License, Version 2.0 (the "License");
 * you may not use this file except in compliance with the License.
@@ -16,10 +16,8 @@
 package com.amazingmvp.ui.fragment;
 
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
-import android.widget.FrameLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import butterknife.Bind;
@@ -50,7 +48,7 @@ public class GenreFragment extends AbstractFragment implements GenrePresenter.Vi
     return R.layout.fragment_genre;
   }
 
-  @Override public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+  @Override public void onActivityCreated(Bundle savedInstanceState) {
     super.onActivityCreated(savedInstanceState);
     genreFragmentComponent().inject(this);
     genrePresenter.setView(this);

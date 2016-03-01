@@ -15,10 +15,7 @@ import java.util.ArrayList;
 
 /**
   * This class represent the adapter of the RecyclerView
-  * and will load with Invoices of the a determined Bill.
-  * Using the infos of these Invoices, this can create the
-  * header of the RecyclerView and inform to the user the
-  * possible dates of the Bill.
+  * and will load the Genre of the Tab.
   */
 public class GenreAdapter extends RecyclerView.Adapter<GenreAdapter.ViewHolder> {
 
@@ -28,15 +25,13 @@ public class GenreAdapter extends RecyclerView.Adapter<GenreAdapter.ViewHolder> 
    * This constructor will be used to configure the
    * RecyclerView of the GenreFragment.
    * @param genres Array of Genres
-   * String of the dateFromTo.
    */
   public GenreAdapter(ArrayList<Genre> genres) {
     this.genres = genres;
   }
 
   /**
-   * This method will load create ViewHolder and inflate the layout
-   * of the determined ViewType, based on the position of the Adapter.
+   * This method will load create ViewHolder and inflate the layout.
    * @param parent The RecyclerView.
    * @param viewType The type of the adapter to be inflated.
    * @return The ViewHolder created and with the layout inflated.
@@ -53,7 +48,7 @@ public class GenreAdapter extends RecyclerView.Adapter<GenreAdapter.ViewHolder> 
    * ViewHolder and configure these infos.
    * This method will be used to create the detail item too
    * and be used to inform to the user about the date of the
-   * first and last Invoices. Based on the information of the
+   * first and last Genre. Based on the information of the
    * method getItemViewType.
    * @param viewHolder Instance of ViewHolder of this Adapter.
    * @param position Position of the item in the Adapter.
@@ -83,31 +78,6 @@ public class GenreAdapter extends RecyclerView.Adapter<GenreAdapter.ViewHolder> 
     return genres != null ? genres.get(index) : null;
   }
 
-  /**
-   * This method set the array of Genres to be used
-   * by the adapter.
-   * @param genres Arrray of Genres.
-   */
-  public void setGenres(ArrayList<Genre> genres) {
-    this.genres = genres;
-  }
-
-  /**
-   * This method return the array of invoices that
-   * is used by adapter.
-   * @return Array of Genre.
-   */
-  public ArrayList<Genre> getGenres() {
-    return genres;
-  }
-
-  /**
-   * This ViewHolder represent the header of the
-   * RecyclerView and be used to inform to the user
-   * about the date of the first and last Invoices.
-   * This will be used to inform the money used of
-   * the bill.
-   */
   public static class ViewHolder extends RecyclerView.ViewHolder {
 
     @Bind(R.id.genre_name) TextView genreName;

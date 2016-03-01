@@ -1,5 +1,5 @@
 /*
-* Copyright (C) 2015 Pedro Paulo de Amorim
+* Copyright (C) 2016 Pedro Paulo de Amorim
 *
 * Licensed under the Apache License, Version 2.0 (the "License");
 * you may not use this file except in compliance with the License.
@@ -23,6 +23,7 @@ import com.amazingmvprules.presenter.GenrePresenter;
 import com.amazingmvprules.domain.interactors.GetGenres;
 import dagger.Component;
 
+@SuppressWarnings("unused")
 @ActivityScope @Component(dependencies = ApplicationComponent.class,
     modules = { ActivityModule.class, GenreModule.class })
 public interface GenreFragmentComponent {

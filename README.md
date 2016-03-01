@@ -23,14 +23,11 @@ Developed By
 Libraries used on the project
 ------------------------------------
 
-* [Recyclerview-Animators][10]
-* [Rey5137:Material][11]
 * [SmartTabLayout][12]
 * [Fresco][13]
-* [Parceler][14]
 * [Dagger 2][16]
-* [IcePick][17]
 * [Butterknife][18]
+* [ThreadExecutor][19]
 
 License
 -------
@@ -56,11 +53,7 @@ License
 [7]: https://github.com/pedrovgs
 [616]: https://github.com/leonardoxh
 [1]: ./art/amazing_mvp.png
-[10]: https://github.com/wasabeef/recyclerview-animators
-[11]: https://github.com/rey5137/material
 [12]: https://github.com/ogaclejapan/SmartTabLayout
 [13]: https://github.com/facebook/fresco
-[14]: https://github.com/johncarl81/parceler
 [16]: https://github.com/google/dagger
-[17]: https://github.com/frankiesardo/icepick
 [18]: https://github.com/JakeWharton/butterknife
