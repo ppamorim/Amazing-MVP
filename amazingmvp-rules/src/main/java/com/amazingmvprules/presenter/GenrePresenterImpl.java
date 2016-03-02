@@ -81,6 +81,10 @@ public class GenrePresenterImpl implements GenrePresenter {
     currentGenresLoaded = null;
   }
 
+  @Override public Genre getGenreAtPosition(int position) {
+    return currentGenresLoaded != null ? currentGenresLoaded.get(position) : null;
+  }
+
   private void showLoading() {
     if (view.isReady()) {
       view.showLoading();

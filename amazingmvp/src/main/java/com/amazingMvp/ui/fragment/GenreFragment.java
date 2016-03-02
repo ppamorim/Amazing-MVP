@@ -27,15 +27,19 @@ import com.amazingmvp.di.ActivityModule;
 import com.amazingmvp.di.components.DaggerGenreFragmentComponent;
 import com.amazingmvp.di.components.GenreFragmentComponent;
 import com.amazingmvp.ui.adapter.GenreAdapter;
+import com.amazingmvp.ui.callback.GenreAdapterCallback;
+import com.amazingmvp.ui.callback.GenreCallback;
 import com.amazingmvprules.domain.model.Genre;
 import com.amazingmvprules.domain.util.Tags;
 import com.amazingmvprules.presenter.GenrePresenter;
 import java.util.ArrayList;
 import javax.inject.Inject;
 
-public class GenreFragment extends AbstractFragment implements GenrePresenter.View {
+public class GenreFragment extends AbstractFragment implements GenrePresenter.View,
+    GenreAdapterCallback {
 
   private GenreFragmentComponent genreFragmentComponent;
+  private GenreCallback genreCallback;
 
   @Inject GenrePresenter genrePresenter;
 
@@ -70,7 +74,7 @@ public class GenreFragment extends AbstractFragment implements GenrePresenter.Vi
   }
 
   @Override public void renderGenres(ArrayList<Genre> genres) {
-    recyclerView.setAdapter(new GenreAdapter(genres));
+    recyclerView.setAdapter(new GenreAdapter(genres, this));
   }
 
   @Override public void showGenres() {
@@ -101,7 +105,16 @@ public class GenreFragment extends AbstractFragment implements GenrePresenter.Vi
     emptyLayout.setVisibility(View.GONE);
   }
 
-  public GenreFragmentComponent genreFragmentComponent() {
+  @Override public void onItemPositionClick(int position) {
+    Genre genre = genrePresenter.getGenreAtPosition(position);
+    genreCallback.onGenreClick(genre);
+  }
+
+  public void setGenreCallback(GenreCallback genreCallback) {
+    this.genreCallback = genreCallback;
+  }
+
+  private GenreFragmentComponent genreFragmentComponent() {
     if (genreFragmentComponent == null) {
       genreFragmentComponent = DaggerGenreFragmentComponent.builder()
           .applicationComponent(((AmazingMvpApplication) getActivity().getApplication()).component())

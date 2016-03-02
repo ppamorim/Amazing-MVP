@@ -9,6 +9,7 @@ import android.widget.TextView;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import com.amazingmvp.R;
+import com.amazingmvp.ui.callback.GenreAdapterCallback;
 import com.amazingmvprules.domain.model.Genre;
 import com.facebook.drawee.view.SimpleDraweeView;
 import java.util.ArrayList;
@@ -19,6 +20,7 @@ import java.util.ArrayList;
   */
 public class GenreAdapter extends RecyclerView.Adapter<GenreAdapter.ViewHolder> {
 
+  private final GenreAdapterCallback genreAdapterCallback;
   private ArrayList<Genre> genres = null;
 
   /**
@@ -26,8 +28,9 @@ public class GenreAdapter extends RecyclerView.Adapter<GenreAdapter.ViewHolder> 
    * RecyclerView of the GenreFragment.
    * @param genres Array of Genres
    */
-  public GenreAdapter(ArrayList<Genre> genres) {
+  public GenreAdapter(ArrayList<Genre> genres, GenreAdapterCallback genreAdapterCallback) {
     this.genres = genres;
+    this.genreAdapterCallback = genreAdapterCallback;
   }
 
   /**
@@ -54,7 +57,7 @@ public class GenreAdapter extends RecyclerView.Adapter<GenreAdapter.ViewHolder> 
    * @param position Position of the item in the Adapter.
    */
   @Override public void onBindViewHolder(GenreAdapter.ViewHolder viewHolder, int position) {
-    viewHolder.configView(getItemAtPosition(position));
+    viewHolder.configView(position, getItemAtPosition(position), genreAdapterCallback);
   }
 
   /**
@@ -78,19 +81,31 @@ public class GenreAdapter extends RecyclerView.Adapter<GenreAdapter.ViewHolder> 
     return genres != null ? genres.get(index) : null;
   }
 
-  public static class ViewHolder extends RecyclerView.ViewHolder {
+  public static class ViewHolder extends RecyclerView.ViewHolder
+      implements View.OnClickListener {
+
+    private GenreAdapterCallback genreAdapterCallback;
 
     @Bind(R.id.genre_name) TextView genreName;
     @Bind(R.id.genre_image) SimpleDraweeView genreImage;
 
     public ViewHolder(View view) {
       super(view);
+      view.setOnClickListener(this);
       ButterKnife.bind(this, view);
     }
 
-    public void configView(Genre genre) {
+    public void configView(int position, Genre genre,
+        GenreAdapterCallback genreAdapterCallback) {
+      this.genreAdapterCallback = genreAdapterCallback;
+      itemView.setTag(position);
       genreName.setText(genre.getTitle());
       genreImage.setImageURI(Uri.parse(genre.getImage()));
+    }
+
+    @Override public void onClick(View view) {
+      System.out.println(view);
+      genreAdapterCallback.onItemPositionClick((Integer) itemView.getTag());
     }
 
   }

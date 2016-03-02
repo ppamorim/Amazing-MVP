@@ -15,19 +15,23 @@
 */
 package com.amazingmvp.ui.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.Toolbar;
 import butterknife.Bind;
 import com.amazingmvp.R;
 import com.amazingmvp.ui.fragment.GenreFragment;
+import com.amazingmvp.ui.callback.GenreCallback;
+import com.amazingmvprules.domain.model.Genre;
 import com.amazingmvprules.domain.util.Tags;
 import com.ogaclejapan.smarttablayout.SmartTabLayout;
 import com.ogaclejapan.smarttablayout.utils.v4.Bundler;
 import com.ogaclejapan.smarttablayout.utils.v4.FragmentPagerItemAdapter;
 import com.ogaclejapan.smarttablayout.utils.v4.FragmentPagerItems;
 
-public class BaseActivity extends AbstractActivity {
+public class BaseActivity extends AbstractActivity implements GenreCallback {
 
   @Bind(R.id.toolbar) Toolbar toolbar;
   @Bind(R.id.smart_tab_layout) SmartTabLayout smartTabLayout;
@@ -43,6 +47,12 @@ public class BaseActivity extends AbstractActivity {
     configViewPager();
   }
 
+  @Override public void onGenreClick(Genre genre) {
+    Intent intent = new Intent(this, SubGenreActivity.class);
+    intent.putExtra(Tags.GENRE, genre);
+    startActivity(intent);
+  }
+
   private void configToolbar() {
     setSupportActionBar(toolbar);
   }
@@ -55,6 +65,14 @@ public class BaseActivity extends AbstractActivity {
         .add(R.string.house, GenreFragment.class,
             new Bundler().putInt(Tags.TAG_GENRE, Tags.TECHNO).get())
         .create());
+
+    for(int i = 0, count = adapter.getCount(); i < count; i++) {
+      Fragment fragment = adapter.getItem(i);
+      if (fragment != null && fragment instanceof GenreFragment) {
+        ((GenreFragment) fragment).setGenreCallback(this);
+      }
+    }
+
     viewPager.setAdapter(adapter);
     smartTabLayout.setViewPager(viewPager);
   }

@@ -21,6 +21,7 @@ import java.util.ArrayList;
 public interface GenrePresenter extends Presenter {
   void requestGenres(int tag);
   void setView(View view);
+  Genre getGenreAtPosition(int position);
   interface View {
     boolean isReady();
     void renderGenres(ArrayList<Genre> genres);
