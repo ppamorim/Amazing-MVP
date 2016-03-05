@@ -18,15 +18,18 @@ package com.amazingmvp.di.components;
 import android.app.Application;
 import com.amazingmvp.AmazingMvpApplication;
 import com.amazingmvp.di.ApplicationModule;
+import com.amazingmvp.di.NetModule;
 import com.github.ppamorim.threadexecutor.InteractorExecutor;
 import com.github.ppamorim.threadexecutor.MainThread;
 import dagger.Component;
 import javax.inject.Singleton;
+import okhttp3.OkHttpClient;
 
-@Singleton @Component(modules = ApplicationModule.class)
+@Singleton @Component(modules = { ApplicationModule.class, NetModule.class })
 public interface ApplicationComponent {
   void inject(AmazingMvpApplication amazingMvpApplication);
   Application application();
   InteractorExecutor executor();
   MainThread mainThread();
+  OkHttpClient provideOkHttpClient();
 }

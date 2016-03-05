@@ -15,6 +15,7 @@
 */
 package com.amazingmvprules.presenter;
 
+import android.support.v4.util.ArrayMap;
 import com.amazingmvprules.domain.model.Genre;
 import java.util.ArrayList;
 
@@ -24,7 +25,7 @@ public interface GenrePresenter extends Presenter {
   Genre getGenreAtPosition(int position);
   interface View {
     boolean isReady();
-    void renderGenres(ArrayList<Genre> genres);
+    void renderGenres(ArrayMap<Integer, Genre> genres);
     void showGenres();
     void showLoading();
     void showError();

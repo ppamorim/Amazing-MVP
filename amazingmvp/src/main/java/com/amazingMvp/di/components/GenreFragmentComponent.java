@@ -19,8 +19,8 @@ import com.amazingmvp.di.ActivityModule;
 import com.amazingmvp.di.GenreModule;
 import com.amazingmvp.di.scopes.ActivityScope;
 import com.amazingmvp.ui.fragment.GenreFragment;
+import com.amazingmvprules.domain.interactors.GenresInteractor;
 import com.amazingmvprules.presenter.GenrePresenter;
-import com.amazingmvprules.domain.interactors.GetGenres;
 import dagger.Component;
 
 @SuppressWarnings("unused")
@@ -29,5 +29,5 @@ import dagger.Component;
 public interface GenreFragmentComponent {
   void inject(GenreFragment genreFragment);
   GenrePresenter getPresenter();
-  GetGenres getGenres();
+  GenresInteractor getGenres();
 }

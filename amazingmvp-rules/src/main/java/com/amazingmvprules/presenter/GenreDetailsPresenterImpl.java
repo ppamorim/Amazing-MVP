@@ -51,8 +51,4 @@ public class GenreDetailsPresenterImpl implements GenreDetailsPresenter {
     }
   }
 
-  @Override public void destroy() {
-    genre = null;
-  }
-
 }

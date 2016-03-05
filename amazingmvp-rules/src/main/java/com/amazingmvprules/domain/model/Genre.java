@@ -1,5 +1,5 @@
 /*
-* Copyright (C) 2015 Pedro Paulo de Amorim
+* Copyright (C) 2016 Pedro Paulo de Amorim
 *
 * Licensed under the Apache License, Version 2.0 (the "License");
 * you may not use this file except in compliance with the License.
@@ -15,21 +15,37 @@
 */
 package com.amazingmvprules.domain.model;
 
+import android.os.Parcel;
 import android.os.Parcelable;
 
 public class Genre implements Parcelable {
 
-  public static final String TITLE = "title";
-  public static final String IMAGE = "image";
-  public static final String DETAILS = "details";
+  public static final Parcelable.Creator<Genre> CREATOR
+      = new Parcelable.Creator<Genre>() {
+    public Genre createFromParcel(Parcel in) {
+      return new Genre(in);
+    }
+    public Genre[] newArray(int size) {
+      return new Genre[size];
+    }
+  };
 
   private String title;
   private String image;
   private String details;
 
-  public Genre() { }
+  public Genre() {
+    super();
+  }
+
+  public Genre(Parcel in) {
+    title = in.readString();
+    image = in.readString();
+    details = in.readString();
+  }
 
   public Genre(String title, String image, String details) {
+    super();
     this.title = title;
     this.image = image;
     this.details = details;
@@ -63,8 +79,10 @@ public class Genre implements Parcelable {
     return 0;
   }
 
-  @Override public void writeToParcel(android.os.Parcel parcel, int i) {
-
+  @Override public void writeToParcel(Parcel parcel, int i) {
+    parcel.writeString(title);
+    parcel.writeString(image);
+    parcel.writeString(details);
   }
 
 }

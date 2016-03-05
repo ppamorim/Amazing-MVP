@@ -16,25 +16,24 @@
 package com.amazingmvp.ui.activity;
 
 import android.content.Intent;
+import android.content.res.Resources;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
+import android.support.design.widget.TabLayout;
+import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.Toolbar;
 import butterknife.Bind;
 import com.amazingmvp.R;
-import com.amazingmvp.ui.fragment.GenreFragment;
+import com.amazingmvp.ui.adapter.GenreAdapter;
 import com.amazingmvp.ui.callback.GenreCallback;
+import com.amazingmvp.util.ViewUtil;
 import com.amazingmvprules.domain.model.Genre;
 import com.amazingmvprules.domain.util.Tags;
-import com.ogaclejapan.smarttablayout.SmartTabLayout;
-import com.ogaclejapan.smarttablayout.utils.v4.Bundler;
-import com.ogaclejapan.smarttablayout.utils.v4.FragmentPagerItemAdapter;
-import com.ogaclejapan.smarttablayout.utils.v4.FragmentPagerItems;
 
 public class BaseActivity extends AbstractActivity implements GenreCallback {
 
   @Bind(R.id.toolbar) Toolbar toolbar;
-  @Bind(R.id.smart_tab_layout) SmartTabLayout smartTabLayout;
+  @Bind(R.id.tab_layout) TabLayout tabLayout;
   @Bind(R.id.view_pager) ViewPager viewPager;
 
   @Override protected int getLayoutId() {
@@ -43,8 +42,13 @@ public class BaseActivity extends AbstractActivity implements GenreCallback {
 
   @Override protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
-    configToolbar();
+    setSupportActionBar(toolbar);
     configViewPager();
+  }
+
+  @Override protected void onDestroy() {
+    cleanAdapter();
+    super.onDestroy();
   }
 
   @Override public void onGenreClick(Genre genre) {
@@ -53,28 +57,33 @@ public class BaseActivity extends AbstractActivity implements GenreCallback {
     startActivity(intent);
   }
 
-  private void configToolbar() {
-    setSupportActionBar(toolbar);
+  /**
+   * This method will only be executed if the device
+   * is a tablet(sw bigger than 600dp).
+   */
+  private void toggleTabletMode(Resources res) {
+    if(res.getBoolean(R.bool.tablet)) {
+      int spacing = ViewUtil.getWidth(this) / res.getInteger(R.integer.view_pager_spacing);
+      viewPager.setClipToPadding(false);
+      viewPager.setPadding(spacing, 0, spacing, 0);
+      viewPager.setPageMargin(spacing / 6);
+    }
   }
 
   private void configViewPager() {
-    FragmentPagerItemAdapter adapter = new FragmentPagerItemAdapter(
-        getSupportFragmentManager(), FragmentPagerItems.with(this)
-        .add(R.string.techno, GenreFragment.class,
-            new Bundler().putInt(Tags.TAG_GENRE, Tags.HOUSE).get())
-        .add(R.string.house, GenreFragment.class,
-            new Bundler().putInt(Tags.TAG_GENRE, Tags.TECHNO).get())
-        .create());
+    Resources resources = getResources();
+    GenreAdapter genreAdapter = new GenreAdapter(getSupportFragmentManager(), 2,
+        resources.getStringArray(R.array.titles), this);
+    viewPager.setAdapter(genreAdapter);
+    tabLayout.setupWithViewPager(viewPager);
+    toggleTabletMode(resources);
+  }
 
-    for(int i = 0, count = adapter.getCount(); i < count; i++) {
-      Fragment fragment = adapter.getItem(i);
-      if (fragment != null && fragment instanceof GenreFragment) {
-        ((GenreFragment) fragment).setGenreCallback(this);
-      }
+  private void cleanAdapter() {
+    PagerAdapter adapter = viewPager.getAdapter();
+    if (adapter != null && adapter instanceof GenreAdapter) {
+      ((GenreAdapter) adapter).invalidate();
     }
-
-    viewPager.setAdapter(adapter);
-    smartTabLayout.setViewPager(viewPager);
   }
 
 }

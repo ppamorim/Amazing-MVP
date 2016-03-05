@@ -16,8 +16,10 @@
 package com.amazingmvprules.presenter;
 
 import android.os.Bundle;
-import com.amazingmvprules.domain.interactors.GetGenres;
+import android.support.v4.util.ArrayMap;
+import com.amazingmvprules.domain.interactors.GenresInteractor;
 import com.amazingmvprules.domain.model.Genre;
+import com.amazingmvprules.domain.util.DebugUtil;
 import com.amazingmvprules.domain.util.Tags;
 import java.util.ArrayList;
 import javax.inject.Inject;
@@ -25,11 +27,11 @@ import javax.inject.Inject;
 public class GenrePresenterImpl implements GenrePresenter {
 
   private View view;
-  private ArrayList<Genre> currentGenresLoaded;
-  private GetGenres getGenres;
+  private ArrayMap<Integer, Genre> currentGenresLoaded;
+  private GenresInteractor genresInteractor;
 
-  @Inject GenrePresenterImpl(GetGenres getGenres) {
-    this.getGenres = getGenres;
+  @Inject GenrePresenterImpl(GenresInteractor genresInteractor) {
+    this.genresInteractor = genresInteractor;
   }
 
   @Override public void setView(View view) {
@@ -42,9 +44,9 @@ public class GenrePresenterImpl implements GenrePresenter {
   @Override public void requestGenres(int tag) {
     if(currentGenresLoaded == null) {
       showLoading();
-      getGenres.setTag(tag);
-      getGenres.execute(new GetGenres.Callback() {
-        @Override public void onGenresLoaded(ArrayList<Genre> genres) {
+      genresInteractor.setTag(tag);
+      genresInteractor.execute(new GenresInteractor.Callback() {
+        @Override public void onGenresLoaded(ArrayMap<Integer, Genre> genres) {
           showGenres(genres);
         }
 
@@ -63,22 +65,20 @@ public class GenrePresenterImpl implements GenrePresenter {
 
   @Override public Bundle saveInstance(Bundle instance) {
     if (instance != null && currentGenresLoaded != null) {
-      instance.putParcelableArrayList(Tags.GENRES, currentGenresLoaded);
+      instance.putParcelableArrayList(Tags.GENRES,
+          new ArrayList<>(currentGenresLoaded.values()));
     }
     return instance;
   }
 
   @Override public void restoreInstance(Bundle instance) {
     if (instance != null && instance.containsKey(Tags.GENRES)) {
-      currentGenresLoaded = instance.getParcelableArrayList(Tags.GENRES);
+      ArrayList<Genre> genres = instance.getParcelableArrayList(Tags.GENRES);
+      currentGenresLoaded = new ArrayMap<>(genres.size());
+      for(int i = 0, count = genres.size(); i < count; i++) {
+        currentGenresLoaded.put(i, genres.get(i));
+      }
     }
-  }
-
-  @Override public void destroy() {
-    if (currentGenresLoaded != null) {
-      currentGenresLoaded.clear();
-    }
-    currentGenresLoaded = null;
   }
 
   @Override public Genre getGenreAtPosition(int position) {
@@ -91,7 +91,7 @@ public class GenrePresenterImpl implements GenrePresenter {
     }
   }
 
-  private void showGenres(ArrayList<Genre> genres) {
+  private void showGenres(ArrayMap<Integer, Genre> genres) {
     if (view.isReady() && genres != null) {
       currentGenresLoaded = genres;
       view.renderGenres(genres);

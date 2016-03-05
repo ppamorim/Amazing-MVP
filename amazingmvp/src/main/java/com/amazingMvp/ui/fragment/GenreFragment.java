@@ -15,7 +15,11 @@
 */
 package com.amazingmvp.ui.fragment;
 
+import android.content.res.Resources;
 import android.os.Bundle;
+import android.support.v4.util.ArrayMap;
+import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.RelativeLayout;
@@ -26,9 +30,10 @@ import com.amazingmvp.R;
 import com.amazingmvp.di.ActivityModule;
 import com.amazingmvp.di.components.DaggerGenreFragmentComponent;
 import com.amazingmvp.di.components.GenreFragmentComponent;
-import com.amazingmvp.ui.adapter.GenreAdapter;
+import com.amazingmvp.ui.adapter.SubGenreAdapter;
 import com.amazingmvp.ui.callback.GenreAdapterCallback;
 import com.amazingmvp.ui.callback.GenreCallback;
+import com.amazingmvp.util.DebugUtil;
 import com.amazingmvprules.domain.model.Genre;
 import com.amazingmvprules.domain.util.Tags;
 import com.amazingmvprules.presenter.GenrePresenter;
@@ -37,6 +42,15 @@ import javax.inject.Inject;
 
 public class GenreFragment extends AbstractFragment implements GenrePresenter.View,
     GenreAdapterCallback {
+
+  public static GenreFragment newInstance(GenreCallback genreCallback) {
+    GenreFragment genreFragment = new GenreFragment();
+    Bundle bundle = new Bundle();
+    bundle.putInt(Tags.GENRE, Tags.HOUSE);
+    genreFragment.setArguments(bundle);
+    genreFragment.setGenreCallback(genreCallback);
+    return genreFragment;
+  }
 
   private GenreFragmentComponent genreFragmentComponent;
   private GenreCallback genreCallback;
@@ -52,17 +66,16 @@ public class GenreFragment extends AbstractFragment implements GenrePresenter.Vi
     return R.layout.fragment_genre;
   }
 
-  @Override public void onActivityCreated(Bundle savedInstanceState) {
-    super.onActivityCreated(savedInstanceState);
+  @Override public void onCreate(Bundle savedInstanceState) {
     genreFragmentComponent().inject(this);
+    super.onCreate(savedInstanceState);
     genrePresenter.setView(this);
     genrePresenter.restoreInstance(savedInstanceState);
-    genrePresenter.requestGenres(getArguments().getInt(Tags.TAG_GENRE));
   }
 
-  @Override public void onDestroy() {
-    genrePresenter.destroy();
-    super.onDestroy();
+  @Override public void onActivityCreated(Bundle savedInstanceState) {
+    super.onActivityCreated(savedInstanceState);
+    genrePresenter.requestGenres(getArguments().getInt(Tags.TAG_GENRE));
   }
 
   @Override public void onSaveInstanceState(Bundle outState) {
@@ -73,8 +86,9 @@ public class GenreFragment extends AbstractFragment implements GenrePresenter.Vi
     return isAdded();
   }
 
-  @Override public void renderGenres(ArrayList<Genre> genres) {
-    recyclerView.setAdapter(new GenreAdapter(genres, this));
+  @Override public void renderGenres(ArrayMap<Integer, Genre> genres) {
+    configRecyclerView();
+    recyclerView.setAdapter(new SubGenreAdapter(genres, this));
   }
 
   @Override public void showGenres() {
@@ -107,7 +121,19 @@ public class GenreFragment extends AbstractFragment implements GenrePresenter.Vi
 
   @Override public void onItemPositionClick(int position) {
     Genre genre = genrePresenter.getGenreAtPosition(position);
-    genreCallback.onGenreClick(genre);
+    if (genreCallback != null) {
+      genreCallback.onGenreClick(genre);
+    }
+  }
+
+  private void configRecyclerView() {
+
+    Resources resources = getContext().getResources();
+    RecyclerView.LayoutManager layoutManager = resources.getBoolean(R.bool.tablet) ?
+        new GridLayoutManager(getContext(), resources.getInteger(R.integer.recycler_view_column)) :
+        new LinearLayoutManager(getContext());
+
+    recyclerView.setLayoutManager(layoutManager);
   }
 
   public void setGenreCallback(GenreCallback genreCallback) {

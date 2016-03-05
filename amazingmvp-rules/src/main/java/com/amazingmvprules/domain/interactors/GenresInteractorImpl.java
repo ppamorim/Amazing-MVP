@@ -15,26 +15,33 @@
 */
 package com.amazingmvprules.domain.interactors;
 
+import android.support.v4.util.ArrayMap;
 import com.amazingmvprules.domain.model.Genre;
+import com.amazingmvprules.domain.parser.MagicParser;
+import com.amazingmvprules.domain.service.GenreService;
 import com.amazingmvprules.domain.util.DebugUtil;
 import com.amazingmvprules.domain.util.StubData;
 import com.amazingmvprules.domain.util.Tags;
 import com.github.ppamorim.threadexecutor.Interactor;
 import com.github.ppamorim.threadexecutor.InteractorExecutor;
 import com.github.ppamorim.threadexecutor.MainThread;
+import java.io.InputStream;
 import java.util.ArrayList;
 import javax.inject.Inject;
+import okhttp3.OkHttpClient;
 
-public class GetGenresImpl extends BaseImpl implements Interactor, GetGenres {
+public class GenresInteractorImpl extends BaseImpl implements Interactor, GenresInteractor {
 
+  private OkHttpClient okHttpClient;
   private final InteractorExecutor interactorExecutor;
   private final MainThread mainThread;
   private Callback callback;
   private int tag;
 
-  @Inject GetGenresImpl(InteractorExecutor interactorExecutor, MainThread mainThread) {
+  @Inject GenresInteractorImpl(InteractorExecutor interactorExecutor, MainThread mainThread, OkHttpClient okHttpClient) {
     this.interactorExecutor = interactorExecutor;
     this.mainThread = mainThread;
+    this.okHttpClient = okHttpClient;
   }
 
   @Override public void execute(Callback callback) {
@@ -49,21 +56,42 @@ public class GetGenresImpl extends BaseImpl implements Interactor, GetGenres {
 
   @Override public void run() {
     try {
+
+      Object result = new GenreService(okHttpClient).requestGenres();
+
+      if(result instanceof InputStream) {
+        ArrayMap<Integer, Genre> genres = new MagicParser<Genre>()
+            .jsonToArrayMap((InputStream) result, Genre.class);
+        if (genres != null && genres.size() > 0) {
+          notifyConnectionSuccess(genres);
+        } else {
+          notifyEmpty();
+        }
+      }
+
+      //ArrayList<Genre> cameras = createItems(tag);
+      //if (cameras.size() > 0) {
+      //  notifyConnectionSuccess(cameras);
+      //} else {
+      //  notifyEmpty();
+      //}
+    } catch (Exception e) {
+
       ArrayList<Genre> cameras = createItems(tag);
       if (cameras.size() > 0) {
-        notifyConnectionSuccess(cameras);
+        //notifyConnectionSuccess(cameras);
       } else {
         notifyEmpty();
       }
-    } catch (Exception e) {
-      if (DebugUtil.DEBUG) {
-        e.printStackTrace();
-      }
-      notifyConnectionError();
+
+      //if (DebugUtil.DEBUG) {
+      //  e.printStackTrace();
+      //}
+      //notifyConnectionError();
     }
   }
 
-  private void notifyConnectionSuccess(final ArrayList<Genre> genres) {
+  private void notifyConnectionSuccess(final ArrayMap<Integer, Genre> genres) {
     mainThread.post(new Runnable() {
       @Override public void run() {
         callback.onGenresLoaded(genres);

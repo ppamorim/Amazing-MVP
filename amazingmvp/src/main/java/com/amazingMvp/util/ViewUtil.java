@@ -15,11 +15,15 @@
 */
 package com.amazingmvp.util;
 
+import android.app.Activity;
 import android.content.Context;
+import android.graphics.Point;
 import android.net.Uri;
+import android.os.Build;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.WindowManager;
 import android.widget.TextView;
 import com.facebook.drawee.backends.pipeline.Fresco;
 import com.facebook.drawee.interfaces.DraweeController;
@@ -35,6 +39,22 @@ public class ViewUtil {
     LinearLayoutManager layoutManager = new LinearLayoutManager(context);
     layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
     recyclerView.setLayoutManager(layoutManager);
+  }
+
+  /**
+   * Use this method to get the width of the Activity.
+   * @return Width of screen in pixels.
+   */
+  @SuppressWarnings("deprecation")
+  public static int getWidth(Activity activity) {
+    WindowManager w = activity.getWindowManager();
+    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB_MR2) {
+      Point size = new Point();
+      w.getDefaultDisplay().getSize(size);
+      return size.x;
+    } else {
+      return w.getDefaultDisplay().getWidth();
+    }
   }
 
   public static void verifyStringAndSet(TextView textView, String text) {

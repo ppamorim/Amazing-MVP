@@ -20,5 +20,4 @@ import android.os.Bundle;
 public interface Presenter {
   Bundle saveInstance(Bundle instance);
   void restoreInstance(Bundle instance);
-  void destroy();
 }

@@ -15,8 +15,11 @@
 */
 package com.amazingmvp.ui.activity;
 
+import android.app.ActionBar;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.CollapsingToolbarLayout;
+import android.support.v7.widget.Toolbar;
 import android.widget.TextView;
 import butterknife.Bind;
 import com.amazingmvp.R;
@@ -37,8 +40,9 @@ public class SubGenreActivity extends AbstractActivity implements GenreDetailsPr
 
   @Inject GenreDetailsPresenter genreDetailsPresenter;
 
+  @Bind(R.id.toolbar) Toolbar toolbar;
+  @Bind(R.id.collapsing_toolbar) CollapsingToolbarLayout collapsingToolbarLayout;
   @Bind(R.id.genre_image) SimpleDraweeView genreImage;
-  @Bind(R.id.genre_title) TextView genreTitle;
   @Bind(R.id.genre_details) TextView genreDetails;
 
   @Override protected int getLayoutId() {
@@ -51,6 +55,7 @@ public class SubGenreActivity extends AbstractActivity implements GenreDetailsPr
     Genre genre = parseIntent();
     genreDetailsPresenter.setGenre(genre);
     genreDetailsPresenter.setView(this);
+    configToolbar(genre);
     configGenre(genre);
   }
 
@@ -69,9 +74,18 @@ public class SubGenreActivity extends AbstractActivity implements GenreDetailsPr
     return genre;
   }
 
+  private void configToolbar(Genre genre) {
+    collapsingToolbarLayout.setTitle(genre.getTitle());
+    setSupportActionBar(toolbar);
+    ActionBar actionBar = getActionBar();
+    if (actionBar != null) {
+      actionBar.setHomeButtonEnabled(true);
+      actionBar.setDisplayShowHomeEnabled(true);
+    }
+  }
+
   private void configGenre(Genre genre) {
     ViewUtil.bind(genreImage, genre.getImage());
-    ViewUtil.verifyStringAndSet(genreTitle, genre.getTitle());
     ViewUtil.verifyStringAndSet(genreDetails, genre.getDetails());
   }
 
