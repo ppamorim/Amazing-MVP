@@ -15,13 +15,13 @@
 */
 package com.amazingmvprules.domain.interactors;
 
-import android.support.v4.util.ArrayMap;
 import com.amazingmvprules.domain.model.Genre;
-import com.amazingmvprules.domain.parser.MagicParser;
+import com.amazingmvprules.domain.model.SubGenre;
 import com.amazingmvprules.domain.service.GenreService;
 import com.amazingmvprules.domain.util.DebugUtil;
 import com.amazingmvprules.domain.util.StubData;
 import com.amazingmvprules.domain.util.Tags;
+import com.bluelinelabs.logansquare.LoganSquare;
 import com.github.ppamorim.threadexecutor.Interactor;
 import com.github.ppamorim.threadexecutor.InteractorExecutor;
 import com.github.ppamorim.threadexecutor.MainThread;
@@ -30,15 +30,15 @@ import java.util.ArrayList;
 import javax.inject.Inject;
 import okhttp3.OkHttpClient;
 
-public class GenresInteractorImpl extends BaseImpl implements Interactor, GenresInteractor {
+public class HomeInteractorImpl extends BaseImpl implements Interactor, HomeInteractor {
 
   private OkHttpClient okHttpClient;
   private final InteractorExecutor interactorExecutor;
   private final MainThread mainThread;
   private Callback callback;
-  private int tag;
 
-  @Inject GenresInteractorImpl(InteractorExecutor interactorExecutor, MainThread mainThread, OkHttpClient okHttpClient) {
+  @Inject HomeInteractorImpl(InteractorExecutor interactorExecutor, MainThread mainThread,
+      OkHttpClient okHttpClient) {
     this.interactorExecutor = interactorExecutor;
     this.mainThread = mainThread;
     this.okHttpClient = okHttpClient;
@@ -50,51 +50,30 @@ public class GenresInteractorImpl extends BaseImpl implements Interactor, Genres
     this.interactorExecutor.run(this);
   }
 
-  @Override public void setTag(int tag) {
-    this.tag = tag;
-  }
-
   @Override public void run() {
     try {
-
       Object result = new GenreService(okHttpClient).requestGenres();
-
       if(result instanceof InputStream) {
-        ArrayMap<Integer, Genre> genres = new MagicParser<Genre>()
-            .jsonToArrayMap((InputStream) result, Genre.class);
-        if (genres != null && genres.size() > 0) {
-          notifyConnectionSuccess(genres);
+        ArrayList<Genre> subGenres = (ArrayList<Genre>) LoganSquare.parseList(
+            (InputStream) result, Genre.class);
+        if (subGenres.size() > 0) {
+          notifyConnectionSuccess(subGenres);
         } else {
           notifyEmpty();
         }
       }
-
-      //ArrayList<Genre> cameras = createItems(tag);
-      //if (cameras.size() > 0) {
-      //  notifyConnectionSuccess(cameras);
-      //} else {
-      //  notifyEmpty();
-      //}
     } catch (Exception e) {
-
-      ArrayList<Genre> cameras = createItems(tag);
-      if (cameras.size() > 0) {
-        //notifyConnectionSuccess(cameras);
-      } else {
-        notifyEmpty();
+      if (DebugUtil.DEBUG) {
+        e.printStackTrace();
       }
-
-      //if (DebugUtil.DEBUG) {
-      //  e.printStackTrace();
-      //}
-      //notifyConnectionError();
+      notifyConnectionError();
     }
   }
 
-  private void notifyConnectionSuccess(final ArrayMap<Integer, Genre> genres) {
+  private void notifyConnectionSuccess(final ArrayList<Genre> subGenres) {
     mainThread.post(new Runnable() {
       @Override public void run() {
-        callback.onGenresLoaded(genres);
+        callback.onGenresLoaded(subGenres);
       }
     });
   }
@@ -113,20 +92,6 @@ public class GenresInteractorImpl extends BaseImpl implements Interactor, Genres
         callback.onErrorLoad();
       }
     });
-  }
-
-  private ArrayList<Genre> createItems(int tag) {
-    ArrayList<Genre> items = new ArrayList<>();
-
-    String[] title = tag == Tags.TECHNO ? StubData.TECHNO_ARRAY : StubData.HOUSE_ARRAY;
-    String[] urlImage = tag == Tags.TECHNO ? StubData.TECHNO_IMAGE : StubData.HOUSE_IMAGE;
-    String[] details = tag == Tags.TECHNO ? StubData.TECHNO_DETAIL :  StubData.HOUSE_DETAIL;
-
-    for (int i = 0, count = title.length; i < count; i++) {
-      items.add(new Genre(title[i], urlImage[i], details[i]));
-    }
-
-    return items;
   }
 
 }

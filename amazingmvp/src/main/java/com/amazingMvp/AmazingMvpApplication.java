@@ -17,6 +17,7 @@ package com.amazingmvp;
 
 import android.app.Application;
 import com.amazingmvp.di.ApplicationModule;
+import com.amazingmvp.di.NetModule;
 import com.amazingmvp.di.components.ApplicationComponent;
 import com.amazingmvp.di.components.DaggerApplicationComponent;
 import com.facebook.drawee.backends.pipeline.Fresco;
@@ -40,6 +41,7 @@ public class AmazingMvpApplication extends Application {
     if (applicationComponent == null) {
       applicationComponent = DaggerApplicationComponent.builder()
           .applicationModule(new ApplicationModule(this))
+          .netModule(new NetModule())
           .build();
     }
     return applicationComponent;

@@ -16,10 +16,10 @@
 package com.amazingmvp.di;
 
 import com.amazingmvp.di.scopes.ActivityScope;
-import com.amazingmvprules.domain.interactors.GenresInteractor;
+import com.amazingmvprules.domain.interactors.HomeInteractor;
 import com.amazingmvprules.presenter.GenrePresenter;
 import com.amazingmvprules.presenter.GenrePresenterImpl;
-import com.amazingmvprules.domain.interactors.GenresInteractorImpl;
+import com.amazingmvprules.domain.interactors.HomeInteractorImpl;
 import dagger.Module;
 import dagger.Provides;
 
@@ -27,10 +27,6 @@ import dagger.Provides;
 
   @Provides @ActivityScope GenrePresenter provideGenrePresenter(GenrePresenterImpl presenter) {
     return presenter;
-  }
-
-  @Provides @ActivityScope GenresInteractor provideGetGenres(GenresInteractorImpl getGenres) {
-    return getGenres;
   }
 
 }

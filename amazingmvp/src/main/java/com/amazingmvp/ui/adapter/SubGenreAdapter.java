@@ -1,7 +1,6 @@
 package com.amazingmvp.ui.adapter;
 
 import android.net.Uri;
-import android.support.v4.util.ArrayMap;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,8 +10,7 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import com.amazingmvp.R;
 import com.amazingmvp.ui.callback.GenreAdapterCallback;
-import com.amazingmvp.util.DebugUtil;
-import com.amazingmvprules.domain.model.Genre;
+import com.amazingmvprules.domain.model.SubGenre;
 import com.facebook.drawee.view.SimpleDraweeView;
 import java.util.ArrayList;
 
@@ -23,15 +21,15 @@ import java.util.ArrayList;
 public class SubGenreAdapter extends RecyclerView.Adapter<SubGenreAdapter.ViewHolder> {
 
   private final GenreAdapterCallback genreAdapterCallback;
-  private ArrayMap<Integer, Genre> genres = null;
+  private ArrayList<SubGenre> subGenres = null;
 
   /**
    * This constructor will be used to configure the
    * RecyclerView of the GenreFragment.
-   * @param genres Array of Genres
+   * @param subGenres Array of Genres
    */
-  public SubGenreAdapter(ArrayMap<Integer, Genre> genres, GenreAdapterCallback genreAdapterCallback) {
-    this.genres = genres;
+  public SubGenreAdapter(ArrayList<SubGenre> subGenres, GenreAdapterCallback genreAdapterCallback) {
+    this.subGenres = subGenres;
     this.genreAdapterCallback = genreAdapterCallback;
   }
 
@@ -69,7 +67,7 @@ public class SubGenreAdapter extends RecyclerView.Adapter<SubGenreAdapter.ViewHo
    * @return The size of Genres.
    */
   @Override public int getItemCount() {
-    return genres != null ? genres.size() : 0;
+    return subGenres != null ? subGenres.size() : 0;
   }
 
   /**
@@ -79,8 +77,8 @@ public class SubGenreAdapter extends RecyclerView.Adapter<SubGenreAdapter.ViewHo
    * @param index Position of the item on ArrayList.
    * @return Genre object.
    */
-  public Genre getItemAtPosition(int index) {
-    return genres != null ? genres.get(index) : null;
+  public SubGenre getItemAtPosition(int index) {
+    return subGenres != null ? subGenres.get(index) : null;
   }
 
   public static class ViewHolder extends RecyclerView.ViewHolder
@@ -98,11 +96,11 @@ public class SubGenreAdapter extends RecyclerView.Adapter<SubGenreAdapter.ViewHo
       ButterKnife.bind(this, view);
     }
 
-    public void configView(int position, Genre genre) {
+    public void configView(int position, SubGenre subGenre) {
 
       itemView.setTag(position);
-      genreName.setText(genre.getTitle());
-      genreImage.setImageURI(Uri.parse(genre.getImage()));
+      genreName.setText(subGenre.getTitle());
+      genreImage.setImageURI(Uri.parse(subGenre.getImage()));
     }
 
     @Override public void onClick(View view) {

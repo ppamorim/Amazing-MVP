@@ -1,7 +1,7 @@
 package com.amazingmvp.ui.callback;
 
-import com.amazingmvprules.domain.model.Genre;
+import com.amazingmvprules.domain.model.SubGenre;
 
 public interface GenreCallback {
-  void onGenreClick(Genre genre);
+  void onGenreClick(SubGenre subGenre);
 }

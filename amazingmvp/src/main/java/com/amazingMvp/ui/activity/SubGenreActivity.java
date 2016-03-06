@@ -28,7 +28,7 @@ import com.amazingmvp.di.ActivityModule;
 import com.amazingmvp.di.components.DaggerGenreDetailsActivityComponent;
 import com.amazingmvp.di.components.GenreDetailsActivityComponent;
 import com.amazingmvp.util.ViewUtil;
-import com.amazingmvprules.domain.model.Genre;
+import com.amazingmvprules.domain.model.SubGenre;
 import com.amazingmvprules.domain.util.Tags;
 import com.amazingmvprules.presenter.GenreDetailsPresenter;
 import com.facebook.drawee.view.SimpleDraweeView;
@@ -52,11 +52,11 @@ public class SubGenreActivity extends AbstractActivity implements GenreDetailsPr
   @Override protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     genreDetailsActivityComponent().inject(this);
-    Genre genre = parseIntent();
-    genreDetailsPresenter.setGenre(genre);
+    SubGenre subGenre = parseIntent();
+    genreDetailsPresenter.setSubGenre(subGenre);
     genreDetailsPresenter.setView(this);
-    configToolbar(genre);
-    configGenre(genre);
+    configToolbar(subGenre);
+    configGenre(subGenre);
   }
 
   @Override protected void onSaveInstanceState(Bundle outState) {
@@ -67,15 +67,15 @@ public class SubGenreActivity extends AbstractActivity implements GenreDetailsPr
     return !isFinishing();
   }
 
-  private Genre parseIntent() {
+  private SubGenre parseIntent() {
     Intent intent = getIntent();
-    Genre genre = intent.getParcelableExtra(Tags.GENRE);
+    SubGenre subGenre = intent.getParcelableExtra(Tags.GENRE);
     intent.removeExtra(Tags.GENRE);
-    return genre;
+    return subGenre;
   }
 
-  private void configToolbar(Genre genre) {
-    collapsingToolbarLayout.setTitle(genre.getTitle());
+  private void configToolbar(SubGenre subGenre) {
+    collapsingToolbarLayout.setTitle(subGenre.getTitle());
     setSupportActionBar(toolbar);
     ActionBar actionBar = getActionBar();
     if (actionBar != null) {
@@ -84,9 +84,9 @@ public class SubGenreActivity extends AbstractActivity implements GenreDetailsPr
     }
   }
 
-  private void configGenre(Genre genre) {
-    ViewUtil.bind(genreImage, genre.getImage());
-    ViewUtil.verifyStringAndSet(genreDetails, genre.getDetails());
+  private void configGenre(SubGenre subGenre) {
+    ViewUtil.bind(genreImage, subGenre.getImage());
+    ViewUtil.verifyStringAndSet(genreDetails, subGenre.getDetails());
   }
 
   public GenreDetailsActivityComponent genreDetailsActivityComponent() {

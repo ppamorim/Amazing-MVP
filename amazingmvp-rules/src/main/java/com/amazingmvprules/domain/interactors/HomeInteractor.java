@@ -15,15 +15,13 @@
 */
 package com.amazingmvprules.domain.interactors;
 
-import android.support.v4.util.ArrayMap;
 import com.amazingmvprules.domain.model.Genre;
 import java.util.ArrayList;
 
-public interface GenresInteractor {
-  void setTag(int tag);
+public interface HomeInteractor {
   void execute(Callback callback);
   interface Callback {
-    void onGenresLoaded(final ArrayMap<Integer, Genre> genres);
+    void onGenresLoaded(final ArrayList<Genre> subGenres);
     void onGenresEmpty();
     void onErrorLoad();
   }

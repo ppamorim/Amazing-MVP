@@ -24,13 +24,18 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.widget.Toolbar;
 import butterknife.Bind;
 import com.amazingmvp.R;
+import com.amazingmvp.di.components.HomeActivityComponent;
 import com.amazingmvp.ui.adapter.GenreAdapter;
 import com.amazingmvp.ui.callback.GenreCallback;
 import com.amazingmvp.util.ViewUtil;
-import com.amazingmvprules.domain.model.Genre;
+import com.amazingmvprules.domain.model.SubGenre;
 import com.amazingmvprules.domain.util.Tags;
+import com.amazingmvprules.presenter.HomePresenter;
+import java.util.ArrayList;
 
-public class BaseActivity extends AbstractActivity implements GenreCallback {
+public class HomeActivity extends AbstractActivity implements HomePresenter.View, GenreCallback {
+
+  private HomeActivityComponent homeActivityComponent;
 
   @Bind(R.id.toolbar) Toolbar toolbar;
   @Bind(R.id.tab_layout) TabLayout tabLayout;
@@ -41,6 +46,7 @@ public class BaseActivity extends AbstractActivity implements GenreCallback {
   }
 
   @Override protected void onCreate(Bundle savedInstanceState) {
+    homeActivityComponent().inject(this);
     super.onCreate(savedInstanceState);
     setSupportActionBar(toolbar);
     configViewPager();
@@ -51,10 +57,34 @@ public class BaseActivity extends AbstractActivity implements GenreCallback {
     super.onDestroy();
   }
 
-  @Override public void onGenreClick(Genre genre) {
+  @Override public void onGenreClick(SubGenre subGenre) {
     Intent intent = new Intent(this, SubGenreActivity.class);
-    intent.putExtra(Tags.GENRE, genre);
+    intent.putExtra(Tags.GENRE, subGenre);
     startActivity(intent);
+  }
+
+  @Override public boolean isReady() {
+    return !isFinishing();
+  }
+
+  @Override public void renderGenres(ArrayList<SubGenre> subGenres) {
+
+  }
+
+  @Override public void showGenres() {
+
+  }
+
+  @Override public void showLoading() {
+
+  }
+
+  @Override public void showError() {
+
+  }
+
+  @Override public void showEmpty() {
+
   }
 
   /**
@@ -84,6 +114,16 @@ public class BaseActivity extends AbstractActivity implements GenreCallback {
     if (adapter != null && adapter instanceof GenreAdapter) {
       ((GenreAdapter) adapter).invalidate();
     }
+  }
+
+  private HomeActivityComponent homeActivityComponent() {
+    if (homeActivityComponent == null) {
+      //homeActivityComponent = DaggerGenreFragmentComponent.builder()
+      //    .applicationComponent(((AmazingMvpApplication) getActivity().getApplication()).component())
+      //    .activityModule(new ActivityModule(getActivity()))
+      //    .build();
+    }
+    return homeActivityComponent;
   }
 
 }

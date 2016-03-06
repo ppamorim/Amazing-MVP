@@ -17,7 +17,6 @@ package com.amazingmvp.ui.fragment;
 
 import android.content.res.Resources;
 import android.os.Bundle;
-import android.support.v4.util.ArrayMap;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -33,8 +32,7 @@ import com.amazingmvp.di.components.GenreFragmentComponent;
 import com.amazingmvp.ui.adapter.SubGenreAdapter;
 import com.amazingmvp.ui.callback.GenreAdapterCallback;
 import com.amazingmvp.ui.callback.GenreCallback;
-import com.amazingmvp.util.DebugUtil;
-import com.amazingmvprules.domain.model.Genre;
+import com.amazingmvprules.domain.model.SubGenre;
 import com.amazingmvprules.domain.util.Tags;
 import com.amazingmvprules.presenter.GenrePresenter;
 import java.util.ArrayList;
@@ -73,11 +71,6 @@ public class GenreFragment extends AbstractFragment implements GenrePresenter.Vi
     genrePresenter.restoreInstance(savedInstanceState);
   }
 
-  @Override public void onActivityCreated(Bundle savedInstanceState) {
-    super.onActivityCreated(savedInstanceState);
-    genrePresenter.requestGenres(getArguments().getInt(Tags.TAG_GENRE));
-  }
-
   @Override public void onSaveInstanceState(Bundle outState) {
     super.onSaveInstanceState(genrePresenter.saveInstance(outState));
   }
@@ -86,53 +79,23 @@ public class GenreFragment extends AbstractFragment implements GenrePresenter.Vi
     return isAdded();
   }
 
-  @Override public void renderGenres(ArrayMap<Integer, Genre> genres) {
+  @Override public void renderGenres(ArrayList<SubGenre> subGenres) {
     configRecyclerView();
-    recyclerView.setAdapter(new SubGenreAdapter(genres, this));
-  }
-
-  @Override public void showGenres() {
-    recyclerView.setVisibility(View.VISIBLE);
-    loadingLayout.setVisibility(View.GONE);
-    emptyLayout.setVisibility(View.GONE);
-    errorLayout.setVisibility(View.GONE);
-  }
-
-  @Override public void showLoading() {
-    loadingLayout.setVisibility(View.VISIBLE);
-    recyclerView.setVisibility(View.GONE);
-    emptyLayout.setVisibility(View.GONE);
-    errorLayout.setVisibility(View.GONE);
-  }
-
-  @Override public void showEmpty() {
-    emptyLayout.setVisibility(View.VISIBLE);
-    recyclerView.setVisibility(View.GONE);
-    loadingLayout.setVisibility(View.GONE);
-    errorLayout.setVisibility(View.GONE);
-  }
-
-  @Override public void showError() {
-    errorLayout.setVisibility(View.VISIBLE);
-    recyclerView.setVisibility(View.GONE);
-    loadingLayout.setVisibility(View.GONE);
-    emptyLayout.setVisibility(View.GONE);
+    recyclerView.setAdapter(new SubGenreAdapter(subGenres, this));
   }
 
   @Override public void onItemPositionClick(int position) {
-    Genre genre = genrePresenter.getGenreAtPosition(position);
+    SubGenre subGenre = genrePresenter.getGenreAtPosition(position);
     if (genreCallback != null) {
-      genreCallback.onGenreClick(genre);
+      genreCallback.onGenreClick(subGenre);
     }
   }
 
   private void configRecyclerView() {
-
     Resources resources = getContext().getResources();
     RecyclerView.LayoutManager layoutManager = resources.getBoolean(R.bool.tablet) ?
         new GridLayoutManager(getContext(), resources.getInteger(R.integer.recycler_view_column)) :
         new LinearLayoutManager(getContext());
-
     recyclerView.setLayoutManager(layoutManager);
   }
 

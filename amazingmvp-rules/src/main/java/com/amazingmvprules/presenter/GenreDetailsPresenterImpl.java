@@ -16,14 +16,14 @@
 package com.amazingmvprules.presenter;
 
 import android.os.Bundle;
-import com.amazingmvprules.domain.model.Genre;
+import com.amazingmvprules.domain.model.SubGenre;
 import com.amazingmvprules.domain.util.Tags;
 import javax.inject.Inject;
 
 public class GenreDetailsPresenterImpl implements GenreDetailsPresenter {
 
   private View view;
-  private Genre genre;
+  private SubGenre subGenre;
 
   @Inject GenreDetailsPresenterImpl() { }
 
@@ -34,20 +34,20 @@ public class GenreDetailsPresenterImpl implements GenreDetailsPresenter {
     this.view = view;
   }
 
-  @Override public void setGenre(Genre genre) {
-    this.genre = genre;
+  @Override public void setSubGenre(SubGenre subGenre) {
+    this.subGenre = subGenre;
   }
 
   @Override public Bundle saveInstance(Bundle instance) {
     if (instance != null) {
-      instance.putParcelable(Tags.GENRE, genre);
+      instance.putParcelable(Tags.GENRE, subGenre);
     }
     return instance;
   }
 
   @Override public void restoreInstance(Bundle instance) {
     if (instance != null && instance.containsKey(Tags.GENRE)) {
-      genre = instance.getParcelable(Tags.GENRE);
+      subGenre = instance.getParcelable(Tags.GENRE);
     }
   }
 

@@ -19,7 +19,7 @@ import com.amazingmvp.di.ActivityModule;
 import com.amazingmvp.di.GenreModule;
 import com.amazingmvp.di.scopes.ActivityScope;
 import com.amazingmvp.ui.fragment.GenreFragment;
-import com.amazingmvprules.domain.interactors.GenresInteractor;
+import com.amazingmvprules.domain.interactors.HomeInteractor;
 import com.amazingmvprules.presenter.GenrePresenter;
 import dagger.Component;
 
@@ -29,5 +29,4 @@ import dagger.Component;
 public interface GenreFragmentComponent {
   void inject(GenreFragment genreFragment);
   GenrePresenter getPresenter();
-  GenresInteractor getGenres();
 }

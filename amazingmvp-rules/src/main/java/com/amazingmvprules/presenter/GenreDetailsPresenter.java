@@ -15,11 +15,11 @@
 */
 package com.amazingmvprules.presenter;
 
-import com.amazingmvprules.domain.model.Genre;
+import com.amazingmvprules.domain.model.SubGenre;
 
 public interface GenreDetailsPresenter extends Presenter {
   void setView(View view);
-  void setGenre(Genre genre);
+  void setSubGenre(SubGenre subGenre);
   interface View {
     boolean isCreated();
   }
