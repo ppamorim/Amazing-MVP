@@ -11,14 +11,13 @@ public class HomePresenterImpl implements HomePresenter {
 
   private View view;
   private HomeInteractor homeInteractor;
-
   private ArrayList<Genre> genres;
 
   @Inject HomePresenterImpl(HomeInteractor homeInteractor) {
     this.homeInteractor = homeInteractor;
   }
 
-  @Override public void requestGenres(int tag) {
+  @Override public void requestGenres() {
     showLoading();
     homeInteractor.execute(new HomeInteractor.Callback() {
       @Override public void onGenresLoaded(ArrayList<Genre> genres) {
@@ -40,10 +39,6 @@ public class HomePresenterImpl implements HomePresenter {
       throw new IllegalArgumentException("The view must not be null!");
     }
     this.view = view;
-  }
-
-  @Override public Genre getGenreAtPosition(int position) {
-    return genres != null ? genres.get(position) : null;
   }
 
   @Override public Bundle saveInstance(Bundle instance) {
@@ -69,7 +64,6 @@ public class HomePresenterImpl implements HomePresenter {
     if (view.isReady() && genres != null) {
       this.genres = genres;
       view.renderGenres(genres);
-      view.showGenres();
     }
   }
 

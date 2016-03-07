@@ -50,8 +50,11 @@ public class GenrePresenterImpl implements GenrePresenter {
     }
   }
 
-  @Override public SubGenre getGenreAtPosition(int position) {
-    return  null;
+  @Override public SubGenre getSubGenreAtPosition(int position) {
+    if (genre == null) {
+      return null;
+    }
+    ArrayList<SubGenre> subGenres = genre.getSubGenres();
+    return subGenres != null ? subGenres.get(position) : null;
   }
-
 }

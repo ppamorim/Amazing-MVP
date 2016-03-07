@@ -22,12 +22,17 @@ import android.support.design.widget.TabLayout;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.Toolbar;
+import android.view.View;
+import android.widget.Button;
+import android.widget.ProgressBar;
+import android.widget.TextView;
 import butterknife.Bind;
 import com.amazingmvp.R;
 import com.amazingmvp.di.components.HomeActivityComponent;
 import com.amazingmvp.ui.adapter.GenreAdapter;
 import com.amazingmvp.ui.callback.GenreCallback;
 import com.amazingmvp.util.ViewUtil;
+import com.amazingmvprules.domain.model.Genre;
 import com.amazingmvprules.domain.model.SubGenre;
 import com.amazingmvprules.domain.util.Tags;
 import com.amazingmvprules.presenter.HomePresenter;
@@ -40,6 +45,9 @@ public class HomeActivity extends AbstractActivity implements HomePresenter.View
   @Bind(R.id.toolbar) Toolbar toolbar;
   @Bind(R.id.tab_layout) TabLayout tabLayout;
   @Bind(R.id.view_pager) ViewPager viewPager;
+  @Bind(R.id.progress_bar) ProgressBar progressBar;
+  @Bind(R.id.text_view_warning) TextView warning;
+  @Bind(R.id.try_again) Button tryAgain;
 
   @Override protected int getLayoutId() {
     return R.layout.activity_base;
@@ -67,24 +75,33 @@ public class HomeActivity extends AbstractActivity implements HomePresenter.View
     return !isFinishing();
   }
 
-  @Override public void renderGenres(ArrayList<SubGenre> subGenres) {
-
-  }
-
-  @Override public void showGenres() {
-
+  @Override public void renderGenres(ArrayList<Genre> genre) {
+    configViewPager();
+    viewPager.setVisibility(View.VISIBLE);
+    tryAgain.setVisibility(View.GONE);
+    warning.setVisibility(View.GONE);
+    progressBar.setVisibility(View.GONE);
   }
 
   @Override public void showLoading() {
-
+    viewPager.setVisibility(View.GONE);
+    tryAgain.setVisibility(View.VISIBLE);
+    warning.setVisibility(View.VISIBLE);
+    progressBar.setVisibility(View.VISIBLE);
   }
 
   @Override public void showError() {
-
+    viewPager.setVisibility(View.GONE);
+    tryAgain.setVisibility(View.VISIBLE);
+    warning.setVisibility(View.VISIBLE);
+    progressBar.setVisibility(View.GONE);
   }
 
   @Override public void showEmpty() {
-
+    viewPager.setVisibility(View.GONE);
+    tryAgain.setVisibility(View.VISIBLE);
+    warning.setVisibility(View.VISIBLE);
+    progressBar.setVisibility(View.GONE);
   }
 
   /**

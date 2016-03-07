@@ -20,7 +20,6 @@ import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.view.View;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import butterknife.Bind;
@@ -85,8 +84,8 @@ public class GenreFragment extends AbstractFragment implements GenrePresenter.Vi
   }
 
   @Override public void onItemPositionClick(int position) {
-    SubGenre subGenre = genrePresenter.getGenreAtPosition(position);
-    if (genreCallback != null) {
+    SubGenre subGenre = genrePresenter.getSubGenreAtPosition(position);
+    if (genreCallback != null && subGenre != null) {
       genreCallback.onGenreClick(subGenre);
     }
   }

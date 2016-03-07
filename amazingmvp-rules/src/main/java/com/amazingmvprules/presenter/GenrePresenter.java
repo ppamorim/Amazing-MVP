@@ -20,7 +20,7 @@ import java.util.ArrayList;
 
 public interface GenrePresenter extends Presenter {
   void setView(View view);
-  SubGenre getGenreAtPosition(int position);
+  SubGenre getSubGenreAtPosition(int position);
   interface View {
     boolean isReady();
     void renderGenres(ArrayList<SubGenre> subGenres);
