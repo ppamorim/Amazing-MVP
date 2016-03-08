@@ -23,7 +23,6 @@ Developed By
 Libraries used on the project
 ------------------------------------
 
-* [SmartTabLayout][12]
 * [Fresco][13]
 * [Dagger 2][16]
 * [Butterknife][18]
@@ -53,7 +52,6 @@ License
 [7]: https://github.com/pedrovgs
 [616]: https://github.com/leonardoxh
 [1]: ./art/amazing_mvp.png
-[12]: https://github.com/ogaclejapan/SmartTabLayout
 [13]: https://github.com/facebook/fresco
 [16]: https://github.com/google/dagger
 [18]: https://github.com/JakeWharton/butterknife
