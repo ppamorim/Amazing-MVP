@@ -54,7 +54,6 @@ public class BaseService {
         .url(url)
         .build();
     Response response = okHttpClient.newCall(request).execute();
-
     return response.isSuccessful()
         ? response.body().byteStream()
         : response.code();

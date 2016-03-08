@@ -37,6 +37,11 @@ public class GenrePresenterImpl implements GenrePresenter {
     this.view = view;
   }
 
+  @Override public void setGenre(Genre genre) {
+    this.genre = genre;
+    loadSubGenres();
+  }
+
   @Override public Bundle saveInstance(Bundle instance) {
     if (instance != null && genre != null) {
       instance.putParcelable(Tags.GENRE, genre);
@@ -57,4 +62,11 @@ public class GenrePresenterImpl implements GenrePresenter {
     ArrayList<SubGenre> subGenres = genre.getSubGenres();
     return subGenres != null ? subGenres.get(position) : null;
   }
+
+  private void loadSubGenres() {
+    if (view.isReady() && genre != null) {
+      view.renderGenres(genre.getSubGenres());
+    }
+  }
+
 }

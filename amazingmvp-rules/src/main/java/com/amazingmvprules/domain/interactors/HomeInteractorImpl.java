@@ -54,10 +54,10 @@ public class HomeInteractorImpl extends BaseImpl implements Interactor, HomeInte
     try {
       Object result = new GenreService(okHttpClient).requestGenres();
       if(result instanceof InputStream) {
-        ArrayList<Genre> subGenres = (ArrayList<Genre>) LoganSquare.parseList(
+        ArrayList<Genre> genres = (ArrayList<Genre>) LoganSquare.parseList(
             (InputStream) result, Genre.class);
-        if (subGenres.size() > 0) {
-          notifyConnectionSuccess(subGenres);
+        if (genres.size() > 0) {
+          notifyConnectionSuccess(genres);
         } else {
           notifyEmpty();
         }

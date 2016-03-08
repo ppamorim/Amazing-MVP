@@ -11,7 +11,7 @@ public class GenreService extends BaseService {
   }
 
   public Object requestGenres() throws IOException {
-    return get("https://gist.githubusercontent.com/ppamorim/556f3428e72da4386b17/raw/b9d64cbe004d5db5755bc0bd830136a65fbae127/gistfile1.txt");
+    return get("https://gist.githubusercontent.com/ppamorim/e26c4b6f63245a674516/raw/5218e7913eb42da4ecd928ea25426b2ff3f76876/json.json");
   }
 
 }

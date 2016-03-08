@@ -27,20 +27,27 @@ import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import butterknife.Bind;
+import com.amazingmvp.AmazingMvpApplication;
 import com.amazingmvp.R;
+import com.amazingmvp.di.ActivityModule;
+import com.amazingmvp.di.components.DaggerHomeActivityComponent;
 import com.amazingmvp.di.components.HomeActivityComponent;
 import com.amazingmvp.ui.adapter.GenreAdapter;
 import com.amazingmvp.ui.callback.GenreCallback;
+import com.amazingmvp.util.DebugUtil;
 import com.amazingmvp.util.ViewUtil;
 import com.amazingmvprules.domain.model.Genre;
 import com.amazingmvprules.domain.model.SubGenre;
 import com.amazingmvprules.domain.util.Tags;
 import com.amazingmvprules.presenter.HomePresenter;
 import java.util.ArrayList;
+import javax.inject.Inject;
 
 public class HomeActivity extends AbstractActivity implements HomePresenter.View, GenreCallback {
 
   private HomeActivityComponent homeActivityComponent;
+
+  @Inject HomePresenter homePresenter;
 
   @Bind(R.id.toolbar) Toolbar toolbar;
   @Bind(R.id.tab_layout) TabLayout tabLayout;
@@ -56,8 +63,9 @@ public class HomeActivity extends AbstractActivity implements HomePresenter.View
   @Override protected void onCreate(Bundle savedInstanceState) {
     homeActivityComponent().inject(this);
     super.onCreate(savedInstanceState);
+    homePresenter.setView(this);
     setSupportActionBar(toolbar);
-    configViewPager();
+    homePresenter.requestGenres();
   }
 
   @Override protected void onDestroy() {
@@ -76,7 +84,7 @@ public class HomeActivity extends AbstractActivity implements HomePresenter.View
   }
 
   @Override public void renderGenres(ArrayList<Genre> genre) {
-    configViewPager();
+    configViewPager(genre);
     viewPager.setVisibility(View.VISIBLE);
     tryAgain.setVisibility(View.GONE);
     warning.setVisibility(View.GONE);
@@ -117,10 +125,15 @@ public class HomeActivity extends AbstractActivity implements HomePresenter.View
     }
   }
 
-  private void configViewPager() {
+  /**
+   * This method will configure the ViewPager
+   * with the adapter and will set the ViewPager
+   * to the TabLayout.
+   */
+  private void configViewPager(ArrayList<Genre> genres) {
     Resources resources = getResources();
-    GenreAdapter genreAdapter = new GenreAdapter(getSupportFragmentManager(), 2,
-        resources.getStringArray(R.array.titles), this);
+    GenreAdapter genreAdapter = new GenreAdapter(getSupportFragmentManager(),
+        genres.size(), genres, this);
     viewPager.setAdapter(genreAdapter);
     tabLayout.setupWithViewPager(viewPager);
     toggleTabletMode(resources);
@@ -135,10 +148,10 @@ public class HomeActivity extends AbstractActivity implements HomePresenter.View
 
   private HomeActivityComponent homeActivityComponent() {
     if (homeActivityComponent == null) {
-      //homeActivityComponent = DaggerGenreFragmentComponent.builder()
-      //    .applicationComponent(((AmazingMvpApplication) getActivity().getApplication()).component())
-      //    .activityModule(new ActivityModule(getActivity()))
-      //    .build();
+      homeActivityComponent = DaggerHomeActivityComponent.builder()
+          .applicationComponent(((AmazingMvpApplication) getApplication()).component())
+          .activityModule(new ActivityModule(this))
+          .build();
     }
     return homeActivityComponent;
   }

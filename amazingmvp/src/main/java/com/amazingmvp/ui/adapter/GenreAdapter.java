@@ -6,16 +6,19 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.util.ArrayMap;
 import com.amazingmvp.ui.callback.GenreCallback;
 import com.amazingmvp.ui.fragment.GenreFragment;
+import com.amazingmvp.util.DebugUtil;
+import com.amazingmvprules.domain.model.Genre;
+import java.util.ArrayList;
 
 public class GenreAdapter extends FragmentPagerAdapter {
 
   private ArrayMap<Integer, GenreFragment> fragments = null;
-  private String[] titles;
+  private ArrayList<String> titles;
 
   public GenreAdapter(FragmentManager fragmentManager,
-      int count,String[] titles, GenreCallback genreCallback) {
+      int count, ArrayList<Genre> genres, GenreCallback genreCallback) {
     super(fragmentManager);
-    generateFragmentsIfNeeded(count, titles, genreCallback);
+    generateFragmentsIfNeeded(count, genres, genreCallback);
   }
 
   /**
@@ -44,7 +47,7 @@ public class GenreAdapter extends FragmentPagerAdapter {
    * @return The configured title or the super of the method.
    */
   @Override public CharSequence getPageTitle(int position) {
-    return titles != null ? titles[position] : super.getPageTitle(position);
+    return titles != null ? titles.get(position) : super.getPageTitle(position);
   }
 
   public void invalidate() {
@@ -60,14 +63,16 @@ public class GenreAdapter extends FragmentPagerAdapter {
    * Based on the position, this method will name the titles
    * and configure the accentColor of this fragment.
    * @param count Items on the success of the call of Interactor.
-   * @param titles Possible title to be used on the TabLayout.
    */
-  public void generateFragmentsIfNeeded(int count, String[] titles, GenreCallback genreCallback) {
-    if (fragments == null) {
-      this.titles = titles;
-      fragments = new ArrayMap<>(count);
+  public void generateFragmentsIfNeeded(int count, ArrayList<Genre> genres,
+      GenreCallback genreCallback) {
+    if (this.fragments == null) {
+      this.titles = new ArrayList<>(count);
+      this.fragments = new ArrayMap<>(count);
       for(int i = 0; i < count; i++) {
-        fragments.put(i, GenreFragment.newInstance(genreCallback));
+        Genre genre = genres.get(i);
+        titles.add(genre.getTitle());
+        this.fragments.put(i, GenreFragment.newInstance(genreCallback, genre));
       }
     }
   }

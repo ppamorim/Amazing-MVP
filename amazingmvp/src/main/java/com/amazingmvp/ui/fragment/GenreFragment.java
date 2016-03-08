@@ -20,17 +20,20 @@ import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.View;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import butterknife.Bind;
 import com.amazingmvp.AmazingMvpApplication;
 import com.amazingmvp.R;
 import com.amazingmvp.di.ActivityModule;
+import com.amazingmvp.di.GenreModule;
 import com.amazingmvp.di.components.DaggerGenreFragmentComponent;
 import com.amazingmvp.di.components.GenreFragmentComponent;
 import com.amazingmvp.ui.adapter.SubGenreAdapter;
 import com.amazingmvp.ui.callback.GenreAdapterCallback;
 import com.amazingmvp.ui.callback.GenreCallback;
+import com.amazingmvprules.domain.model.Genre;
 import com.amazingmvprules.domain.model.SubGenre;
 import com.amazingmvprules.domain.util.Tags;
 import com.amazingmvprules.presenter.GenrePresenter;
@@ -40,10 +43,10 @@ import javax.inject.Inject;
 public class GenreFragment extends AbstractFragment implements GenrePresenter.View,
     GenreAdapterCallback {
 
-  public static GenreFragment newInstance(GenreCallback genreCallback) {
+  public static GenreFragment newInstance(GenreCallback genreCallback, Genre genre) {
     GenreFragment genreFragment = new GenreFragment();
     Bundle bundle = new Bundle();
-    bundle.putInt(Tags.GENRE, Tags.HOUSE);
+    bundle.putParcelable(Tags.GENRE, genre);
     genreFragment.setArguments(bundle);
     genreFragment.setGenreCallback(genreCallback);
     return genreFragment;
@@ -54,9 +57,6 @@ public class GenreFragment extends AbstractFragment implements GenrePresenter.Vi
 
   @Inject GenrePresenter genrePresenter;
 
-  @Bind(R.id.layout_error) TextView errorLayout;
-  @Bind(R.id.layout_empty) TextView emptyLayout;
-  @Bind(R.id.layout_loading) RelativeLayout loadingLayout;
   @Bind(R.id.recycler_view) RecyclerView recyclerView;
 
   @Override protected int getLayoutId() {
@@ -67,6 +67,11 @@ public class GenreFragment extends AbstractFragment implements GenrePresenter.Vi
     genreFragmentComponent().inject(this);
     super.onCreate(savedInstanceState);
     genrePresenter.setView(this);
+  }
+
+  @Override public void onViewCreated(View view, Bundle savedInstanceState) {
+    super.onViewCreated(view, savedInstanceState);
+    genrePresenter.setGenre((Genre) getArguments().getParcelable(Tags.GENRE));
     genrePresenter.restoreInstance(savedInstanceState);
   }
 
@@ -107,6 +112,7 @@ public class GenreFragment extends AbstractFragment implements GenrePresenter.Vi
       genreFragmentComponent = DaggerGenreFragmentComponent.builder()
           .applicationComponent(((AmazingMvpApplication) getActivity().getApplication()).component())
           .activityModule(new ActivityModule(getActivity()))
+          .genreModule(new GenreModule())
           .build();
     }
     return genreFragmentComponent;

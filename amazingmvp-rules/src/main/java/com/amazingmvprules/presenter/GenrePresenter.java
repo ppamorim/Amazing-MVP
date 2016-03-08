@@ -15,11 +15,13 @@
 */
 package com.amazingmvprules.presenter;
 
+import com.amazingmvprules.domain.model.Genre;
 import com.amazingmvprules.domain.model.SubGenre;
 import java.util.ArrayList;
 
 public interface GenrePresenter extends Presenter {
   void setView(View view);
+  void setGenre(Genre genre);
   SubGenre getSubGenreAtPosition(int position);
   interface View {
     boolean isReady();

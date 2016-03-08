@@ -2,8 +2,11 @@ package com.amazingmvprules.domain.model;
 
 import android.os.Parcel;
 import android.os.Parcelable;
+import com.bluelinelabs.logansquare.annotation.JsonField;
+import com.bluelinelabs.logansquare.annotation.JsonObject;
 import java.util.ArrayList;
 
+@JsonObject
 public class Genre implements Parcelable {
 
   public static final Parcelable.Creator<Genre> CREATOR
@@ -16,9 +19,13 @@ public class Genre implements Parcelable {
     }
   };
 
-  private int id;
-  private String title;
-  private ArrayList<SubGenre> subGenres;
+  @JsonField(name = "id") private int id;
+  @JsonField(name = "title") private String title;
+  @JsonField(name = "subgenres") private ArrayList<SubGenre> subGenres;
+
+  public Genre() {
+    super();
+  }
 
   public Genre(Parcel in) {
     this.id = in.readInt();
@@ -61,6 +68,8 @@ public class Genre implements Parcelable {
   }
 
   @Override public void writeToParcel(Parcel parcel, int i) {
+    parcel.writeInt(id);
+    parcel.writeString(title);
     parcel.writeList(subGenres);
   }
 
