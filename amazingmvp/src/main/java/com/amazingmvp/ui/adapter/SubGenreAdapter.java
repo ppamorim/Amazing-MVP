@@ -10,6 +10,7 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import com.amazingmvp.R;
 import com.amazingmvp.ui.callback.GenreAdapterCallback;
+import com.amazingmvp.util.DebugUtil;
 import com.amazingmvprules.domain.model.SubGenre;
 import com.facebook.drawee.view.SimpleDraweeView;
 import java.util.ArrayList;
@@ -92,12 +93,11 @@ public class SubGenreAdapter extends RecyclerView.Adapter<SubGenreAdapter.ViewHo
     public ViewHolder(View view, GenreAdapterCallback genreAdapterCallback) {
       super(view);
       this.genreAdapterCallback = genreAdapterCallback;
-      view.setOnClickListener(this);
       ButterKnife.bind(this, view);
+      view.setOnClickListener(this);
     }
 
     public void configView(int position, SubGenre subGenre) {
-
       itemView.setTag(position);
       genreName.setText(subGenre.getTitle());
       genreImage.setImageURI(Uri.parse(subGenre.getImage()));

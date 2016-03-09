@@ -17,21 +17,24 @@ public class HomePresenterImpl implements HomePresenter {
     this.homeInteractor = homeInteractor;
   }
 
-  @Override public void requestGenres() {
+  @Override public void requestGenres(Bundle savedInstance) {
     showLoading();
-    homeInteractor.execute(new HomeInteractor.Callback() {
-      @Override public void onGenresLoaded(ArrayList<Genre> genres) {
-        showGenres(genres);
-      }
 
-      @Override public void onGenresEmpty() {
-        showEmpty();
-      }
-
-      @Override public void onErrorLoad() {
-        showError();
-      }
-    });
+    if (savedInstance != null) {
+      restoreInstance(savedInstance);
+    } else{
+      homeInteractor.execute(new HomeInteractor.Callback() {
+        @Override public void onGenresLoaded(ArrayList<Genre> genres) {
+          showGenres(genres);
+        }
+        @Override public void onGenresEmpty() {
+          showEmpty();
+        }
+        @Override public void onErrorLoad() {
+          showError();
+        }
+      });
+    }
   }
 
   @Override public void setView(View view) {
@@ -51,6 +54,11 @@ public class HomePresenterImpl implements HomePresenter {
   @Override public void restoreInstance(Bundle instance) {
     if (instance != null && instance.containsKey(Tags.GENRES)) {
       genres = instance.getParcelableArrayList(Tags.GENRES);
+    }
+    if (genres != null) {
+      showGenres(genres);
+    } else {
+      showError();
     }
   }
 

@@ -16,11 +16,8 @@
 package com.amazingmvprules.domain.interactors;
 
 import com.amazingmvprules.domain.model.Genre;
-import com.amazingmvprules.domain.model.SubGenre;
 import com.amazingmvprules.domain.service.GenreService;
 import com.amazingmvprules.domain.util.DebugUtil;
-import com.amazingmvprules.domain.util.StubData;
-import com.amazingmvprules.domain.util.Tags;
 import com.bluelinelabs.logansquare.LoganSquare;
 import com.github.ppamorim.threadexecutor.Interactor;
 import com.github.ppamorim.threadexecutor.InteractorExecutor;

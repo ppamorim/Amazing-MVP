@@ -1,10 +1,11 @@
 package com.amazingmvprules.presenter;
 
+import android.os.Bundle;
 import com.amazingmvprules.domain.model.Genre;
 import java.util.ArrayList;
 
 public interface HomePresenter extends Presenter {
-  void requestGenres();
+  void requestGenres(Bundle savedInstance);
   void setView(View view);
   interface View {
     boolean isReady();

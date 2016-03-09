@@ -6,7 +6,6 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.util.ArrayMap;
 import com.amazingmvp.ui.callback.GenreCallback;
 import com.amazingmvp.ui.fragment.GenreFragment;
-import com.amazingmvp.util.DebugUtil;
 import com.amazingmvprules.domain.model.Genre;
 import java.util.ArrayList;
 

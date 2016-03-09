@@ -30,6 +30,7 @@ import com.amazingmvp.di.ActivityModule;
 import com.amazingmvp.di.GenreModule;
 import com.amazingmvp.di.components.DaggerGenreFragmentComponent;
 import com.amazingmvp.di.components.GenreFragmentComponent;
+import com.amazingmvp.ui.activity.HomeActivity;
 import com.amazingmvp.ui.adapter.SubGenreAdapter;
 import com.amazingmvp.ui.callback.GenreAdapterCallback;
 import com.amazingmvp.ui.callback.GenreCallback;
@@ -40,7 +41,8 @@ import com.amazingmvprules.presenter.GenrePresenter;
 import java.util.ArrayList;
 import javax.inject.Inject;
 
-public class GenreFragment extends AbstractFragment implements GenrePresenter.View,
+public class GenreFragment extends AbstractFragment implements
+    GenrePresenter.View,
     GenreAdapterCallback {
 
   public static GenreFragment newInstance(GenreCallback genreCallback, Genre genre) {
@@ -67,6 +69,7 @@ public class GenreFragment extends AbstractFragment implements GenrePresenter.Vi
     genreFragmentComponent().inject(this);
     super.onCreate(savedInstanceState);
     genrePresenter.setView(this);
+    genreCallback = (HomeActivity) getActivity();
   }
 
   @Override public void onViewCreated(View view, Bundle savedInstanceState) {

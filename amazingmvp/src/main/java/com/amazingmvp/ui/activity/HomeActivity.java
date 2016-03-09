@@ -19,6 +19,7 @@ import android.content.Intent;
 import android.content.res.Resources;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
+import android.support.v4.util.ArrayMap;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.Toolbar;
@@ -65,12 +66,53 @@ public class HomeActivity extends AbstractActivity implements HomePresenter.View
     super.onCreate(savedInstanceState);
     homePresenter.setView(this);
     setSupportActionBar(toolbar);
-    homePresenter.requestGenres();
+    homePresenter.requestGenres(savedInstanceState);
   }
 
   @Override protected void onDestroy() {
     cleanAdapter();
     super.onDestroy();
+  }
+
+  @Override public boolean isReady() {
+    return !isFinishing();
+  }
+
+  @Override protected void onSaveInstanceState(Bundle outState) {
+    super.onSaveInstanceState(homePresenter.saveInstance(outState));
+  }
+
+  @Override public void renderGenres(ArrayList<Genre> genre) {
+    configViewPager(genre);
+    tabLayout.setVisibility(View.VISIBLE);
+    viewPager.setVisibility(View.VISIBLE);
+    tryAgain.setVisibility(View.GONE);
+    warning.setVisibility(View.GONE);
+    progressBar.setVisibility(View.GONE);
+  }
+
+  @Override public void showLoading() {
+    tabLayout.setVisibility(View.GONE);
+    viewPager.setVisibility(View.GONE);
+    tryAgain.setVisibility(View.GONE);
+    warning.setVisibility(View.GONE);
+    progressBar.setVisibility(View.VISIBLE);
+  }
+
+  @Override public void showError() {
+    tabLayout.setVisibility(View.GONE);
+    viewPager.setVisibility(View.GONE);
+    tryAgain.setVisibility(View.VISIBLE);
+    warning.setVisibility(View.VISIBLE);
+    progressBar.setVisibility(View.GONE);
+  }
+
+  @Override public void showEmpty() {
+    tabLayout.setVisibility(View.GONE);
+    viewPager.setVisibility(View.GONE);
+    tryAgain.setVisibility(View.VISIBLE);
+    warning.setVisibility(View.VISIBLE);
+    progressBar.setVisibility(View.GONE);
   }
 
   @Override public void onGenreClick(SubGenre subGenre) {
@@ -79,44 +121,12 @@ public class HomeActivity extends AbstractActivity implements HomePresenter.View
     startActivity(intent);
   }
 
-  @Override public boolean isReady() {
-    return !isFinishing();
-  }
-
-  @Override public void renderGenres(ArrayList<Genre> genre) {
-    configViewPager(genre);
-    viewPager.setVisibility(View.VISIBLE);
-    tryAgain.setVisibility(View.GONE);
-    warning.setVisibility(View.GONE);
-    progressBar.setVisibility(View.GONE);
-  }
-
-  @Override public void showLoading() {
-    viewPager.setVisibility(View.GONE);
-    tryAgain.setVisibility(View.VISIBLE);
-    warning.setVisibility(View.VISIBLE);
-    progressBar.setVisibility(View.VISIBLE);
-  }
-
-  @Override public void showError() {
-    viewPager.setVisibility(View.GONE);
-    tryAgain.setVisibility(View.VISIBLE);
-    warning.setVisibility(View.VISIBLE);
-    progressBar.setVisibility(View.GONE);
-  }
-
-  @Override public void showEmpty() {
-    viewPager.setVisibility(View.GONE);
-    tryAgain.setVisibility(View.VISIBLE);
-    warning.setVisibility(View.VISIBLE);
-    progressBar.setVisibility(View.GONE);
-  }
-
   /**
    * This method will only be executed if the device
    * is a tablet(sw bigger than 600dp).
    */
-  private void toggleTabletMode(Resources res) {
+  private void toggleTabletMode() {
+    Resources res = getResources();
     if(res.getBoolean(R.bool.tablet)) {
       int spacing = ViewUtil.getWidth(this) / res.getInteger(R.integer.view_pager_spacing);
       viewPager.setClipToPadding(false);
@@ -131,12 +141,10 @@ public class HomeActivity extends AbstractActivity implements HomePresenter.View
    * to the TabLayout.
    */
   private void configViewPager(ArrayList<Genre> genres) {
-    Resources resources = getResources();
-    GenreAdapter genreAdapter = new GenreAdapter(getSupportFragmentManager(),
-        genres.size(), genres, this);
-    viewPager.setAdapter(genreAdapter);
+    viewPager.setAdapter(new GenreAdapter(getSupportFragmentManager(),
+        genres.size(), genres, this));
     tabLayout.setupWithViewPager(viewPager);
-    toggleTabletMode(resources);
+    toggleTabletMode();
   }
 
   private void cleanAdapter() {
