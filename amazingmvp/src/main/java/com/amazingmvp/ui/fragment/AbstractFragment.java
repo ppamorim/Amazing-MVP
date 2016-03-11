@@ -46,6 +46,11 @@ public abstract class AbstractFragment extends Fragment {
     return view;
   }
 
+  @Override public void onDestroy() {
+    ButterKnife.unbind(this);
+    super.onDestroy();
+  }
+
   /**
    * This abstract method will return the layout
    * of the view that the fragment want to load.

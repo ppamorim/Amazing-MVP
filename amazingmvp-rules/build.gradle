@@ -38,7 +38,6 @@ dependencies {
   compile 'com.github.ppamorim:threadexecutor:0.1'
   provided 'com.android.support:design:23.1.1'
   apt "com.github.Raizlabs.DBFlow:dbflow-processor:${dbflow_version}"
-  // kapt for kotlin apt
   compile "com.github.Raizlabs.DBFlow:dbflow-core:${dbflow_version}"
   compile "com.github.Raizlabs.DBFlow:dbflow:${dbflow_version}"
 }
