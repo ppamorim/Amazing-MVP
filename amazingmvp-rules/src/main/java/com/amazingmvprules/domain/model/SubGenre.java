@@ -47,7 +47,6 @@ public class SubGenre extends BaseModel implements Parcelable {
   @Column @JsonField(name = "image") String image;
   @Column @JsonField(name = "details") String details;
 
-
   public SubGenre() {
     super();
   }
