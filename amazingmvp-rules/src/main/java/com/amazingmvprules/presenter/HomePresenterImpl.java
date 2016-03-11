@@ -37,7 +37,7 @@ public class HomePresenterImpl implements HomePresenter {
 
     if (savedInstance != null) {
       restoreInstance(savedInstance);
-    } else{
+    } else {
       homeInteractor.execute(new HomeInteractor.Callback() {
         @Override public void onGenresLoaded(ArrayList<Genre> genres) {
           showGenres(genres);

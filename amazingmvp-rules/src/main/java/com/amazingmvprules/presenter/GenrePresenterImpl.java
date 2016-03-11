@@ -19,7 +19,6 @@ import android.os.Bundle;
 import com.amazingmvprules.domain.model.Genre;
 import com.amazingmvprules.domain.model.SubGenre;
 import com.amazingmvprules.domain.util.Tags;
-import java.util.ArrayList;
 import java.util.List;
 import javax.inject.Inject;
 

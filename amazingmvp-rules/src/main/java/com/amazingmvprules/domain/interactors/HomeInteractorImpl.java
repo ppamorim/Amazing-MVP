@@ -51,7 +51,7 @@ public class HomeInteractorImpl extends BaseImpl implements Interactor, HomeInte
   @Override public void run() {
     try {
       Object result = new GenreService(okHttpClient).requestGenres();
-      if(result instanceof InputStream) {
+      if (result instanceof InputStream) {
         handleArrayOfItems((ArrayList<Genre>) LoganSquare.parseList(
             (InputStream) result, Genre.class));
       }
