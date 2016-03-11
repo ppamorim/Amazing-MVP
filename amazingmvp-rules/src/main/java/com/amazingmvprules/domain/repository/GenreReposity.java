@@ -16,17 +16,18 @@
 package com.amazingmvprules.domain.repository;
 
 import com.amazingmvprules.domain.model.Genre;
+import com.raizlabs.android.dbflow.sql.language.SQLite;
 import java.util.ArrayList;
 import java.util.List;
 
 public class GenreReposity {
 
   public static void handleGenres(ArrayList<Genre> genres) {
-
+    SQLite.insert(Genre.class).values(genres);
   }
 
   public static List<Genre> queryGenres() {
-    return null;
+    return SQLite.select().from(Genre.class).queryList();
   }
 
 }

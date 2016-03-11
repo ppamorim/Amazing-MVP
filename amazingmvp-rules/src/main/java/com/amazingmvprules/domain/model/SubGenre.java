@@ -17,11 +17,20 @@ package com.amazingmvprules.domain.model;
 
 import android.os.Parcel;
 import android.os.Parcelable;
+import com.amazingmvprules.domain.database.AppDatabase;
 import com.bluelinelabs.logansquare.annotation.JsonField;
 import com.bluelinelabs.logansquare.annotation.JsonObject;
+import com.raizlabs.android.dbflow.annotation.Column;
+import com.raizlabs.android.dbflow.annotation.ForeignKey;
+import com.raizlabs.android.dbflow.annotation.PrimaryKey;
+import com.raizlabs.android.dbflow.annotation.Table;
+import com.raizlabs.android.dbflow.config.FlowManager;
+import com.raizlabs.android.dbflow.structure.BaseModel;
+import com.raizlabs.android.dbflow.structure.container.ForeignKeyContainer;
 
 @JsonObject
-public class SubGenre implements Parcelable {
+@Table(database = AppDatabase.class)
+public class SubGenre extends BaseModel implements Parcelable {
 
   public static final Parcelable.Creator<SubGenre> CREATOR
       = new Parcelable.Creator<SubGenre>() {
@@ -33,15 +42,18 @@ public class SubGenre implements Parcelable {
     }
   };
 
-  @JsonField(name = "title") private String title;
-  @JsonField(name = "image") private String image;
-  @JsonField(name = "details") private String details;
+  @PrimaryKey(autoincrement = true) int id;
+  @Column @JsonField(name = "title") String title;
+  @Column @JsonField(name = "image") String image;
+  @Column @JsonField(name = "details") String details;
+
 
   public SubGenre() {
     super();
   }
 
   public SubGenre(Parcel in) {
+    id = in.readInt();
     title = in.readString();
     image = in.readString();
     details = in.readString();
@@ -52,6 +64,14 @@ public class SubGenre implements Parcelable {
     this.title = title;
     this.image = image;
     this.details = details;
+  }
+
+  public int getId() {
+    return id;
+  }
+
+  public void setId(int id) {
+    this.id = id;
   }
 
   public String getImage() {
@@ -83,9 +103,22 @@ public class SubGenre implements Parcelable {
   }
 
   @Override public void writeToParcel(Parcel parcel, int i) {
+    parcel.writeInt(id);
     parcel.writeString(title);
     parcel.writeString(image);
     parcel.writeString(details);
+  }
+
+
+  @ForeignKey(saveForeignKeyModel = false) ForeignKeyContainer<Genre> queenForeignKeyContainer;
+
+  /**
+   * Example of setting the model for the queen.
+   */
+  public void associateQueen(Genre genre) {
+    queenForeignKeyContainer = FlowManager
+        .getContainerAdapter(Genre.class)
+        .toForeignKeyContainer(genre);
   }
 
 }

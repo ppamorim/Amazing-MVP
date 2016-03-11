@@ -17,13 +17,26 @@ package com.amazingmvprules.domain.model;
 
 import android.os.Parcel;
 import android.os.Parcelable;
+import com.amazingmvprules.domain.database.AppDatabase;
+import com.amazingmvprules.domain.util.LoganSubGenreTypeConverter;
+import com.amazingmvprules.domain.util.SubGenreTypeConverter;
 import com.bluelinelabs.logansquare.annotation.JsonField;
 import com.bluelinelabs.logansquare.annotation.JsonObject;
+import com.raizlabs.android.dbflow.annotation.Column;
+import com.raizlabs.android.dbflow.annotation.ForeignKey;
+import com.raizlabs.android.dbflow.annotation.ModelContainer;
+import com.raizlabs.android.dbflow.annotation.OneToMany;
+import com.raizlabs.android.dbflow.annotation.PrimaryKey;
+import com.raizlabs.android.dbflow.annotation.Table;
+import com.raizlabs.android.dbflow.sql.language.SQLite;
+import com.raizlabs.android.dbflow.structure.BaseModel;
 import java.util.ArrayList;
 import java.util.List;
 
+@ModelContainer
 @JsonObject
-public class Genre implements Parcelable {
+@Table(database = AppDatabase.class)
+public class Genre extends BaseModel implements Parcelable {
 
   public static final Parcelable.Creator<Genre> CREATOR
       = new Parcelable.Creator<Genre>() {
@@ -35,9 +48,11 @@ public class Genre implements Parcelable {
     }
   };
 
-  @JsonField(name = "id") private Long id;
-  @JsonField(name = "title") private String title;
-  @JsonField(name = "subgenres") List<SubGenre> subGenres;
+  @PrimaryKey @JsonField(name = "id") Long id;
+  @Column @JsonField(name = "title") String title;
+
+  @JsonField(name = "subgenres", typeConverter = LoganSubGenreTypeConverter.class)
+  @Column(typeConverter = SubGenreTypeConverter.class) List subGenres;
 
   public Genre() {
     super();
@@ -50,7 +65,7 @@ public class Genre implements Parcelable {
     this.subGenres = new ArrayList<>(arrayList.size());
     for (Object o : arrayList) {
       if (o instanceof SubGenre) {
-        this.subGenres.add((SubGenre) o);
+        this.subGenres.add(o);
       }
     }
   }
@@ -71,10 +86,6 @@ public class Genre implements Parcelable {
     this.title = title;
   }
 
-  public List<SubGenre> getSubGenres() {
-    return subGenres;
-  }
-
   public void setSubGenres(ArrayList<SubGenre> subGenres) {
     this.subGenres = subGenres;
   }
@@ -87,6 +98,16 @@ public class Genre implements Parcelable {
     parcel.writeLong(id);
     parcel.writeString(title);
     parcel.writeList(subGenres);
+  }
+
+  @OneToMany(methods = { OneToMany.Method.SAVE, OneToMany.Method.DELETE}, variableName = "subGenres")
+  public List<SubGenre> getSubGenres() {
+    if (subGenres == null || subGenres.isEmpty()) {
+      subGenres = SQLite.select()
+          .from(SubGenre.class)
+          .queryList();
+    }
+    return subGenres;
   }
 
 }

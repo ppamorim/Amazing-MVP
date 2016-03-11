@@ -21,6 +21,7 @@ import com.amazingmvp.di.NetModule;
 import com.amazingmvp.di.components.ApplicationComponent;
 import com.amazingmvp.di.components.DaggerApplicationComponent;
 import com.facebook.drawee.backends.pipeline.Fresco;
+import com.raizlabs.android.dbflow.config.FlowManager;
 
 public class AmazingMvpApplication extends Application {
 
@@ -29,7 +30,8 @@ public class AmazingMvpApplication extends Application {
   @Override public void onCreate() {
     super.onCreate();
     initializeDependencyInjector().inject(this);
-    Fresco.initialize(getApplicationContext());
+    FlowManager.init(this);
+    Fresco.initialize(this);
   }
 
   @Override public void onTerminate() {
