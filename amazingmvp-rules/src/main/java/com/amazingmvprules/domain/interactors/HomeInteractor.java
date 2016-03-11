@@ -24,5 +24,6 @@ public interface HomeInteractor {
     void onGenresLoaded(final ArrayList<Genre> subGenres);
     void onGenresEmpty();
     void onErrorLoad();
+    void onNoConnection(int reason);
   }
 }

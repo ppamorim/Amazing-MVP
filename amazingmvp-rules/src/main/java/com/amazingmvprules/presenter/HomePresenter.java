@@ -28,5 +28,6 @@ public interface HomePresenter extends Presenter {
     void showLoading();
     void showError();
     void showEmpty();
+    void showOffline(int reason);
   }
 }

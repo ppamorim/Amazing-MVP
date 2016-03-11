@@ -59,6 +59,7 @@ public class HomeInteractorImpl extends BaseImpl implements Interactor, HomeInte
       if (DebugUtil.DEBUG) {
         e.printStackTrace();
       }
+      notifyNoConnection(0);
       if (!loadFromRepository()) {
         notifyConnectionError();
       }
@@ -109,6 +110,14 @@ public class HomeInteractorImpl extends BaseImpl implements Interactor, HomeInte
     mainThread.post(new Runnable() {
       @Override public void run() {
         callback.onErrorLoad();
+      }
+    });
+  }
+
+  private void notifyNoConnection(final int reason) {
+    mainThread.post(new Runnable() {
+      @Override public void run() {
+        callback.onNoConnection(reason);
       }
     });
   }

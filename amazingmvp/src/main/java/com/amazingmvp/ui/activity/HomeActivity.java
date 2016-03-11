@@ -18,6 +18,7 @@ package com.amazingmvp.ui.activity;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.os.Bundle;
+import android.support.design.widget.Snackbar;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
@@ -25,6 +26,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import butterknife.Bind;
 import com.amazingmvp.AmazingMvpApplication;
@@ -34,6 +36,7 @@ import com.amazingmvp.di.components.DaggerHomeActivityComponent;
 import com.amazingmvp.di.components.HomeActivityComponent;
 import com.amazingmvp.ui.adapter.GenreAdapter;
 import com.amazingmvp.ui.callback.GenreCallback;
+import com.amazingmvp.util.DebugUtil;
 import com.amazingmvp.util.ViewUtil;
 import com.amazingmvprules.domain.model.Genre;
 import com.amazingmvprules.domain.model.SubGenre;
@@ -48,6 +51,7 @@ public class HomeActivity extends AbstractActivity implements HomePresenter.View
 
   @Inject HomePresenter homePresenter;
 
+  @Bind(R.id.container) RelativeLayout container;
   @Bind(R.id.toolbar) Toolbar toolbar;
   @Bind(R.id.tab_layout) TabLayout tabLayout;
   @Bind(R.id.view_pager) ViewPager viewPager;
@@ -111,6 +115,11 @@ public class HomeActivity extends AbstractActivity implements HomePresenter.View
     tryAgain.setVisibility(View.VISIBLE);
     warning.setVisibility(View.VISIBLE);
     progressBar.setVisibility(View.GONE);
+  }
+
+  @Override public void showOffline(int reason) {
+    Snackbar snackbar = Snackbar.make(container, R.string.connection_error, Snackbar.LENGTH_LONG);
+    snackbar.show();
   }
 
   @Override public void onGenreClick(SubGenre subGenre) {

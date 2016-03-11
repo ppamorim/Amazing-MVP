@@ -48,6 +48,9 @@ public class HomePresenterImpl implements HomePresenter {
         @Override public void onErrorLoad() {
           showError();
         }
+        @Override public void onNoConnection(int reason) {
+          showOffline(reason);
+        }
       });
     }
   }
@@ -99,6 +102,12 @@ public class HomePresenterImpl implements HomePresenter {
   private void showEmpty() {
     if (view.isReady()) {
       view.showEmpty();
+    }
+  }
+
+  private void showOffline(int reason) {
+    if (view.isReady()) {
+      view.showOffline(reason);
     }
   }
 
