@@ -83,7 +83,7 @@ public class GenreAdapter extends FragmentPagerAdapter {
     if (this.fragments == null) {
       this.titles = new ArrayList<>(count);
       this.fragments = new ArrayMap<>(count);
-      for(int i = 0; i < count; i++) {
+      for (int i = 0; i < count; i++) {
         Genre genre = genres.get(i);
         this.titles.add(genre.getTitle());
         this.fragments.put(i, GenreFragment.newInstance(genreCallback, genre));

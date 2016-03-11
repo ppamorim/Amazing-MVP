@@ -36,7 +36,6 @@ import com.amazingmvprules.domain.model.Genre;
 import com.amazingmvprules.domain.model.SubGenre;
 import com.amazingmvprules.domain.util.Tags;
 import com.amazingmvprules.presenter.GenrePresenter;
-import java.util.ArrayList;
 import java.util.List;
 import javax.inject.Inject;
 
@@ -99,9 +98,9 @@ public class GenreFragment extends AbstractFragment implements
 
   private void configRecyclerView() {
     Resources resources = getContext().getResources();
-    RecyclerView.LayoutManager layoutManager = resources.getBoolean(R.bool.tablet) ?
-        new GridLayoutManager(getContext(), resources.getInteger(R.integer.recycler_view_column)) :
-        new LinearLayoutManager(getContext());
+    RecyclerView.LayoutManager layoutManager = resources.getBoolean(R.bool.tablet)
+        ? new GridLayoutManager(getContext(), resources.getInteger(R.integer.recycler_view_column))
+        : new LinearLayoutManager(getContext());
     recyclerView.setLayoutManager(layoutManager);
   }
 

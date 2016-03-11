@@ -36,7 +36,6 @@ import com.amazingmvp.di.components.DaggerHomeActivityComponent;
 import com.amazingmvp.di.components.HomeActivityComponent;
 import com.amazingmvp.ui.adapter.GenreAdapter;
 import com.amazingmvp.ui.callback.GenreCallback;
-import com.amazingmvp.util.DebugUtil;
 import com.amazingmvp.util.ViewUtil;
 import com.amazingmvprules.domain.model.Genre;
 import com.amazingmvprules.domain.model.SubGenre;
@@ -134,7 +133,7 @@ public class HomeActivity extends AbstractActivity implements HomePresenter.View
    */
   private void toggleTabletMode() {
     Resources res = getResources();
-    if(res.getBoolean(R.bool.tablet)) {
+    if (res.getBoolean(R.bool.tablet)) {
       int spacing = ViewUtil.getWidth(this) / res.getInteger(R.integer.view_pager_spacing);
       viewPager.setClipToPadding(false);
       viewPager.setPadding(spacing, 0, spacing, 0);

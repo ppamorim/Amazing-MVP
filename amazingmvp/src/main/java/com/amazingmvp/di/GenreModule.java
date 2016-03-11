@@ -16,10 +16,8 @@
 package com.amazingmvp.di;
 
 import com.amazingmvp.di.scopes.ActivityScope;
-import com.amazingmvprules.domain.interactors.HomeInteractor;
 import com.amazingmvprules.presenter.GenrePresenter;
 import com.amazingmvprules.presenter.GenrePresenterImpl;
-import com.amazingmvprules.domain.interactors.HomeInteractorImpl;
 import dagger.Module;
 import dagger.Provides;
 
