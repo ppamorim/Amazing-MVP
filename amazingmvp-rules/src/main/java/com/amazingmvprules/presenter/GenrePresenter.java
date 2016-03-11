@@ -1,5 +1,5 @@
 /*
-* Copyright (C) 2015 Pedro Paulo de Amorim
+* Copyright (C) 2016 Pedro Paulo de Amorim
 *
 * Licensed under the Apache License, Version 2.0 (the "License");
 * you may not use this file except in compliance with the License.
@@ -17,7 +17,7 @@ package com.amazingmvprules.presenter;
 
 import com.amazingmvprules.domain.model.Genre;
 import com.amazingmvprules.domain.model.SubGenre;
-import java.util.ArrayList;
+import java.util.List;
 
 public interface GenrePresenter extends Presenter {
   void setView(View view);
@@ -25,6 +25,6 @@ public interface GenrePresenter extends Presenter {
   SubGenre getSubGenreAtPosition(int position);
   interface View {
     boolean isReady();
-    void renderGenres(ArrayList<SubGenre> subGenres);
+    void renderGenres(List<SubGenre> subGenres);
   }
 }

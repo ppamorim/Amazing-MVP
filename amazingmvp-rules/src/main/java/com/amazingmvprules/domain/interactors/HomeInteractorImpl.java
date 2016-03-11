@@ -1,5 +1,5 @@
 /*
-* Copyright (C) 2015 Pedro Paulo de Amorim
+* Copyright (C) 2016 Pedro Paulo de Amorim
 *
 * Licensed under the Apache License, Version 2.0 (the "License");
 * you may not use this file except in compliance with the License.
@@ -16,6 +16,7 @@
 package com.amazingmvprules.domain.interactors;
 
 import com.amazingmvprules.domain.model.Genre;
+import com.amazingmvprules.domain.repository.GenreReposity;
 import com.amazingmvprules.domain.service.GenreService;
 import com.amazingmvprules.domain.util.DebugUtil;
 import com.bluelinelabs.logansquare.LoganSquare;
@@ -51,20 +52,41 @@ public class HomeInteractorImpl extends BaseImpl implements Interactor, HomeInte
     try {
       Object result = new GenreService(okHttpClient).requestGenres();
       if(result instanceof InputStream) {
-        ArrayList<Genre> genres = (ArrayList<Genre>) LoganSquare.parseList(
-            (InputStream) result, Genre.class);
-        if (genres.size() > 0) {
-          notifyConnectionSuccess(genres);
-        } else {
-          notifyEmpty();
-        }
+        handleArrayOfItems((ArrayList<Genre>) LoganSquare.parseList(
+            (InputStream) result, Genre.class));
       }
     } catch (Exception e) {
       if (DebugUtil.DEBUG) {
         e.printStackTrace();
       }
-      notifyConnectionError();
+      if (!loadFromRepository()) {
+        notifyConnectionError();
+      }
     }
+  }
+
+  private void handleArrayOfItems(ArrayList<Genre> genres) {
+    if (genres.size() > 0) {
+      GenreReposity.handleGenres(genres);
+      notifyConnectionSuccess(genres);
+    } else if (!loadFromRepository()) {
+      notifyEmpty();
+    }
+  }
+
+  /**
+   * Try to retrieve the information from
+   * the database.
+   *
+   * @return it has success on query
+   */
+  private boolean loadFromRepository() {
+    ArrayList<Genre> genres = (ArrayList<Genre>) GenreReposity.queryGenres();
+    if (genres != null && genres.size() > 0) {
+      notifyConnectionSuccess(genres);
+      return true;
+    }
+    return false;
   }
 
   private void notifyConnectionSuccess(final ArrayList<Genre> subGenres) {

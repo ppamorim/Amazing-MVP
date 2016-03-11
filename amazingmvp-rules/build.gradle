@@ -1,23 +1,17 @@
 apply plugin: 'com.android.library'
 apply plugin: 'com.neenbedankt.android-apt'
+apply plugin: 'checkstyle'
 
 android {
 
-  compileSdkVersion 23
-  buildToolsVersion "23.0.2"
+  compileSdkVersion Integer.parseInt(project.ANDROID_COMPILE_SDK_VERSION)
+  buildToolsVersion project.ANDROID_BUILD_TOOLS_VERSION
 
   defaultConfig {
-    minSdkVersion 10
-    targetSdkVersion 23
-    versionCode 1
-    versionName "1.0"
-  }
-
-  buildTypes {
-    release {
-      minifyEnabled false
-      proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-    }
+    versionCode Integer.parseInt(project.VERSION_CODE)
+    versionName project.VERSION_NAME
+    minSdkVersion Integer.parseInt(project.ANDROID_MIN_SDK)
+    targetSdkVersion Integer.parseInt(project.ANDROID_TARGET_SDK_VERSION)
   }
 
 }
@@ -37,4 +31,12 @@ dependencies {
   provided 'org.glassfish:javax.annotation:10.0-b28'
   compile 'com.github.ppamorim:threadexecutor:0.1'
   provided 'com.android.support:design:23.1.1'
+}
+
+task checkstyle(type: Checkstyle) {
+  configFile file('../config/checkstyle/checkstyle.xml')
+  source 'src/main/java'
+  include '**/*.java'
+  exclude '**/gen/**'
+  classpath = files()
 }

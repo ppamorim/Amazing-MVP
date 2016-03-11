@@ -44,6 +44,7 @@
       android:padding="16dp"
       android:layout_below="@+id/text_view_warning"
       android:layout_centerHorizontal="true"
+      android:text="@string/try_again"
       android:visibility="gone"/>
 
 </RelativeLayout>

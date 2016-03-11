@@ -1,5 +1,5 @@
 /*
-* Copyright (C) 2015 Pedro Paulo de Amorim
+* Copyright (C) 2016 Pedro Paulo de Amorim
 *
 * Licensed under the Apache License, Version 2.0 (the "License");
 * you may not use this file except in compliance with the License.
@@ -16,11 +16,11 @@
 package com.amazingmvprules.presenter;
 
 import android.os.Bundle;
-import com.amazingmvprules.domain.interactors.HomeInteractor;
 import com.amazingmvprules.domain.model.Genre;
 import com.amazingmvprules.domain.model.SubGenre;
 import com.amazingmvprules.domain.util.Tags;
 import java.util.ArrayList;
+import java.util.List;
 import javax.inject.Inject;
 
 public class GenrePresenterImpl implements GenrePresenter {
@@ -59,7 +59,7 @@ public class GenrePresenterImpl implements GenrePresenter {
     if (genre == null) {
       return null;
     }
-    ArrayList<SubGenre> subGenres = genre.getSubGenres();
+    List<SubGenre> subGenres = genre.getSubGenres();
     return subGenres != null ? subGenres.get(position) : null;
   }
 

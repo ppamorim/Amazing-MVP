@@ -15,7 +15,6 @@
 */
 package com.amazingmvprules.domain.service;
 
-import com.amazingmvprules.domain.util.DebugUtil;
 import java.io.IOException;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;

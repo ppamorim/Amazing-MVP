@@ -13,16 +13,20 @@
 * See the License for the specific language governing permissions and
 * limitations under the License.
 */
-package com.amazingmvprules.domain.interactors;
+package com.amazingmvprules.domain.repository;
 
 import com.amazingmvprules.domain.model.Genre;
 import java.util.ArrayList;
+import java.util.List;
 
-public interface HomeInteractor {
-  void execute(Callback callback);
-  interface Callback {
-    void onGenresLoaded(final ArrayList<Genre> subGenres);
-    void onGenresEmpty();
-    void onErrorLoad();
+public class GenreReposity {
+
+  public static void handleGenres(ArrayList<Genre> genres) {
+
   }
+
+  public static List<Genre> queryGenres() {
+    return null;
+  }
+
 }

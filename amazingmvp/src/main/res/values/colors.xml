@@ -10,6 +10,8 @@
   <color name="cod_gray">#050505</color>
   <color name="white">#FFFFFF</color>
 
+  <color name="accent">#F13030</color>
+
   <array name="progress_colors">
     <item>@color/white</item>
   </array>

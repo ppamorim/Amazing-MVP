@@ -21,8 +21,6 @@ import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
-import android.widget.RelativeLayout;
-import android.widget.TextView;
 import butterknife.Bind;
 import com.amazingmvp.AmazingMvpApplication;
 import com.amazingmvp.R;
@@ -39,6 +37,7 @@ import com.amazingmvprules.domain.model.SubGenre;
 import com.amazingmvprules.domain.util.Tags;
 import com.amazingmvprules.presenter.GenrePresenter;
 import java.util.ArrayList;
+import java.util.List;
 import javax.inject.Inject;
 
 public class GenreFragment extends AbstractFragment implements
@@ -86,7 +85,7 @@ public class GenreFragment extends AbstractFragment implements
     return isAdded();
   }
 
-  @Override public void renderGenres(ArrayList<SubGenre> subGenres) {
+  @Override public void renderGenres(List<SubGenre> subGenres) {
     configRecyclerView();
     recyclerView.setAdapter(new SubGenreAdapter(subGenres, this));
   }

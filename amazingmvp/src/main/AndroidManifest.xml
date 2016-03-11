@@ -22,7 +22,12 @@
         </activity>
 
         <activity android:name="com.amazingmvp.ui.activity.SubGenreActivity"/>
-      
+
+      <meta-data android:name="DATABASE" android:value="sugar_eletronic_music.db" />
+      <meta-data android:name="VERSION" android:value="1" />
+      <meta-data android:name="QUERY_LOG" android:value="true" />
+      <meta-data android:name="DOMAIN_PACKAGE_NAME" android:value="com.amazingmvp" />
+
     </application>
 
 </manifest>
