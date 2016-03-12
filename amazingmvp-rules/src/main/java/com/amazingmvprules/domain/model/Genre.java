@@ -18,7 +18,6 @@ package com.amazingmvprules.domain.model;
 import android.os.Parcel;
 import android.os.Parcelable;
 import com.amazingmvprules.domain.database.AppDatabase;
-import com.amazingmvprules.domain.util.SubGenreTypeConverter;
 import com.bluelinelabs.logansquare.annotation.JsonField;
 import com.bluelinelabs.logansquare.annotation.JsonObject;
 import com.raizlabs.android.dbflow.annotation.Column;
@@ -53,7 +52,8 @@ public class Genre extends BaseModel implements Parcelable {
    * This list MUST be typed or LoganSquare cannot work.
    */
   @JsonField(name = "subgenres")
-  @Column(typeConverter = SubGenreTypeConverter.class) List<SubGenre> subGenres;
+  //@Column(typeConverter = SubGenreTypeConverter.class) List<SubGenre> subGenres;
+  List<SubGenre> subGenres;
 
   public Genre() {
     super();

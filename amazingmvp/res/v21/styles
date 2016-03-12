@@ -1,0 +1,8 @@
+<resources>
+
+  <!--&lt;!&ndash; Base application theme. &ndash;&gt;-->
+  <!--<style name="AppTheme.Base" parent="Theme.AppCompat.Light.NoActionBar">-->
+    <!--<item name="android:colorButtonNormal">@color/accent</item>-->
+  <!--</style>-->
+
+</resources>
