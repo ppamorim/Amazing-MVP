@@ -47,13 +47,13 @@ public class ViewUtil {
    */
   @SuppressWarnings("deprecation")
   public static int getWidth(Activity activity) {
-    WindowManager w = activity.getWindowManager();
+    WindowManager window = activity.getWindowManager();
     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB_MR2) {
       Point size = new Point();
-      w.getDefaultDisplay().getSize(size);
+      window.getDefaultDisplay().getSize(size);
       return size.x;
     } else {
-      return w.getDefaultDisplay().getWidth();
+      return window.getDefaultDisplay().getWidth();
     }
   }
 

@@ -9,12 +9,4 @@
   <string name="connection_error">Connection error</string>
   <string name="try_again">Tente novamente</string>
 
-  <string name="house">House</string>
-  <string name="techno">Techno</string>
-
-  <string-array name="titles">
-    <item>@string/house</item>
-    <item>@string/techno</item>
-  </string-array>
-
 </resources>

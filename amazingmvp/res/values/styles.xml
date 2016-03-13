@@ -1,6 +1,5 @@
 <resources>
 
-  <!-- Base application theme. -->
   <style name="AppTheme.Base" parent="Theme.AppCompat.Light.NoActionBar">
     <item name="colorPrimary">@color/toolbar</item>
     <item name="colorPrimaryDark">@color/black</item>
@@ -10,7 +9,6 @@
     <item name="actionMenuTextColor">@color/white</item>
     <item name="android:textColorSecondary">@color/white</item>
     <item name="android:windowBackground">@color/background</item>
-    <item name="android:windowContentOverlay">@null</item>
     <item name="colorButtonNormal">@color/accent</item>
   </style>
 

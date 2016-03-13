@@ -21,6 +21,7 @@ import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.widget.TextView;
 import butterknife.Bind;
 import com.amazingmvp.AmazingMvpApplication;
 import com.amazingmvp.R;
@@ -58,6 +59,7 @@ public class GenreFragment extends AbstractFragment implements
   @Inject GenrePresenter genrePresenter;
 
   @Bind(R.id.recycler_view) RecyclerView recyclerView;
+  @Bind(R.id.warning) TextView warning;
 
   @Override protected int getLayoutId() {
     return R.layout.fragment_genre;
@@ -85,8 +87,15 @@ public class GenreFragment extends AbstractFragment implements
   }
 
   @Override public void renderGenres(List<SubGenre> subGenres) {
-    configRecyclerView();
-    recyclerView.setAdapter(new SubGenreAdapter(subGenres, this));
+    if (subGenres != null && subGenres.size() > 0) {
+      configRecyclerView();
+      recyclerView.setAdapter(new SubGenreAdapter(subGenres, this));
+      recyclerView.setVisibility(View.VISIBLE);
+      warning.setVisibility(View.GONE);
+    } else {
+      recyclerView.setVisibility(View.GONE);
+      warning.setVisibility(View.VISIBLE);
+    }
   }
 
   @Override public void onItemPositionClick(int position) {
